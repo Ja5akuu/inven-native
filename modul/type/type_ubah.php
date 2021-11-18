@@ -29,6 +29,17 @@
 		}
 				
 		if(count($message)==0){	
+			if (! empty($_FILES['txtCSR']['tmp_name'])) {
+				$file_csr = $_FILES['txtCSR']['name'];
+				$file_csr = stripslashes($file_csr);
+				$file_csr = str_replace("'","",$file_csr);
+					
+				$file_csr = $kodeBaru."_".$file_csr;
+				copy($_FILES['txtCSR']['tmp_name'],"photo/".$file_csr);
+			}
+			else {
+				$file_csr = "";
+			}
 			$qryUpdate=mysqli_query($koneksi,"UPDATE ms_type SET      nama_kodsup='$txtkodsup',
 															nama_type='$txttype',
 															nama_pic='$txtpic',
@@ -36,6 +47,7 @@
 															no_telepon='$txttelepon',
 															sup_note='$txtnote', 
 														keterangan_type='$txtKeterangan',
+														file_doc='$file_csr',
 														status_type='$cmbStatus'	
 													WHERE kode_type ='".$_POST['txtKode']."'") 
 				   or die ("Gagal query update".mysqli_error());
@@ -150,6 +162,12 @@ $dataStatus		= isset($dataShow['status_type']) ?  $dataShow['status_type'] : $_P
 		              	</select>
 		            </div>
 		        </div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">File Doc :</label>
+					<div class="col-md-5">
+					<input type="file" class="form-control" name="txtCSR" value="<?php echo $datafile_doc; ?>" />
+	                    </div>
+				</div>	
 				<div class="form-group">
 	                <label class="col-md-2 control-label">Status :</label>
 	                <div class="col-md-10">

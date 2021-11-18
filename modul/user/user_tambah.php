@@ -37,7 +37,7 @@
 		$cmbJenis		= $_POST['cmbJenis'];
 
 		$sqlCek="SELECT * FROM ms_user WHERE username_user='$txtUser'";
-		$qryCek=mysqli_query(, $koneksi) or die ("Eror Query".mysqli_error()); 
+		$qryCek=mysqli_query($koneksi,$sqlCek ) or die ("Eror Query".mysqli_error()); 
 		if(mysqli_num_rows($qryCek)>=1){
 			$message[] = "Maaf, Username <b> $ txtUsername </b> sudah ada, ganti dengan username lain";
 		}

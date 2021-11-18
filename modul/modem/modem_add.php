@@ -27,7 +27,11 @@
 		$txtSerial		= $_POST['txtSerial'];
 		$cmbKategori	= $_POST['cmbKategori'];
 		
-
+		$sqlCek="SELECT * FROM ms_barang WHERE kode_barang='$txtSerial'";
+		$qryCek=mysqli_query($koneksi,$sqlCek) or die ("Eror Query".mysqli_error()); 
+		if(mysqli_num_rows($qryCek)>=1){
+			$message[] = "Maaf, <b> $txtSerial </b> sudah ada, ganti dengan yang lain";
+		}
 		if(count($message)==0){	
 			$qrySave=mysqli_query($koneksi,"INSERT INTO ms_barang SET principal_barang='Purchasing', 
 															kode_type='$cmbType',

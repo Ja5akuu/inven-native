@@ -42,6 +42,18 @@ if(isset($_POST['btnSave'])){
 
 	if(count($message)==0){			
 		$NewID	= $_POST['kode'];
+		if (! empty($_FILES['txtCSR']['tmp_name'])) {
+			$file_csr = $_FILES['txtCSR']['name'];
+			$file_csr = stripslashes($file_csr);
+			$file_csr = str_replace("'","",$file_csr);
+				
+			$file_csr = $kodeBaru."_".$file_csr;
+			copy($_FILES['txtCSR']['tmp_name'],"photo/".$file_csr);
+		}
+		else {
+			$file_csr = "";
+		}
+
 		$qrySave=mysqli_query($koneksi,"INSERT INTO ms_type SET kode_type='$NewID', 
 			nama_kodsup='$txtkodsup',
 			nama_type='$txttype',
@@ -50,6 +62,7 @@ if(isset($_POST['btnSave'])){
 			no_telepon='$txttelepon',
 			sup_note='$txtnote',
 			keterangan_type='$txtKeterangan',
+			file_doc='$file_csr',
 			status_type='$cmbStatus'") 
 		or die ("Gagal query".mysqli_error());
 		if($qrySave){
@@ -152,6 +165,12 @@ $dataStatus		= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 						</select>
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">File Doc :</label>
+					<div class="col-md-5">
+					<input type="file" class="form-control" name="txtCSR" value="<?php echo $dataCSR ?>" />
+	                    </div>
+				</div>	
 				<div class="form-group">
 					<label class="col-md-2 control-label">Status :</label>
 					<div class="col-md-10">

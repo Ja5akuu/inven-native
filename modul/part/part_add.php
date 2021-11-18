@@ -24,14 +24,14 @@
 		
 
 		if(count($message)==0){	
-			$qrySave=mysql_query("INSERT INTO ms_barang SET nama_barang='$txtNama', 
+			$qrySave=mysqli_query($koneksi,"INSERT INTO ms_barang SET nama_barang='$txtNama', 
 															principal_barang='Part', 
 															kode_type='$cmbType', 
 															stok_barang='$txtStok',
 															kode_merk='$cmbMerk',
 															kode_barang='$txtSerial',
 															status_barang='$cmbStatus',
-															keterangan_barang='$txtKeterangan'") or die ("Gagal query".mysql_error());
+															keterangan_barang='$txtKeterangan'") or die ("Gagal query".mysqli_error());
 			if($qrySave){
 				$_SESSION['pesan'] = 'Data part berhasil ditambahkan';
 				echo '<script>window.location="?page=dtpart"</script>';
@@ -83,8 +83,8 @@
 					  <option value=""> </option>
 					  <?php
 						  $dataSql = "SELECT * FROM ms_merk WHERE status_merk='Active' ORDER BY kode_merk";
-						  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-						  while ($dataRow = mysql_fetch_array($dataQry)) {
+						  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+						  while ($dataRow = mysqli_fetch_array($dataQry)) {
 							if ($dataMerk == $dataRow['kode_merk']) {
 								$cek = " selected";
 							} else { $cek=""; }
@@ -108,8 +108,8 @@
 					  <option value=""> </option>
 					  <?php
 						  $dataSql = "SELECT * FROM ms_type WHERE status_type='Active' AND keterangan_type='Part' ORDER BY kode_type";
-						  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-						  while ($dataRow = mysql_fetch_array($dataQry)) {
+						  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+						  while ($dataRow = mysqli_fetch_array($dataQry)) {
 							if ($dataType == $dataRow['kode_type']) {
 								$cek = " selected";
 							} else { $cek=""; }

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 17, 2021 at 07:23 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 5.6.40
+-- Host: localhost:3306
+-- Generation Time: Nov 18, 2021 at 09:02 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -353,7 +352,6 @@ INSERT INTO `ms_barang` (`id_barang`, `kode_barang`, `nama_barang`, `keterangan_
 (2223, 'U-CPP-07', 'SERAGAM CELANA PUTIH PJG UK 36', ' Rp70,000 ', ' Rp70.000 ', ' Rp- ', ' Rp- ', 'Active', '010', 'Purchasing', '025', 0, 'PCS', ' Rp90.000 '),
 (2224, 'UP-SOP-02', 'SERAGAM OPERATOR PEST UK L', ' Rp95,000 ', ' Rp95.000 ', ' Rp- ', ' Rp- ', 'Active', '010', 'Purchasing', '025', 0, 'PCS', ' Rp120.000 '),
 (2225, 'UP-WEP-02', 'WEARPACK PEST UK L', ' Rp195,000 ', ' Rp195.000 ', ' Rp- ', ' Rp- ', 'Active', '010', 'Purchasing', '029', 0, '', ''),
-(2226, '', '', '', '', '', '', '', '', '', '', 0, '', ''),
 (2227, 'C-HSO-11', 'HAND SOAP FRESHA APPLE', 'Rp.79.750', 'Rp.72.500', 'Rp.-', 'Rp.7.250', 'Active', '001', 'Purchasing', '038', 44, 'Galon', 'Rp.105.000'),
 (2228, 'C-HSO-12', 'HAND SOAP FRESHA NPNC', 'Rp.79.750', 'Rp.72.500', 'Rp.-', 'Rp.7.250', 'Active', '001', 'Purchasing', '038', 7, 'Galon', 'Rp.105.000'),
 (2229, 'N-KAM-03', 'MOP COTTON BAND 350GR - RED', 'Rp.16.500', 'Rp.16.500', 'Rp.-', 'Rp.-', 'Active', '003', 'Purchasing', '074', 35, 'PCS', ''),
@@ -389,11 +387,11 @@ INSERT INTO `ms_barang` (`id_barang`, `kode_barang`, `nama_barang`, `keterangan_
 --
 
 CREATE TABLE `ms_customer` (
-  `kode_customer` char(5) NOT NULL,
+  `kode_customer` varchar(20) NOT NULL,
   `nama_customer` varchar(50) NOT NULL,
-  `alamat_customer` text NOT NULL,
+  `alamat_customer` text,
   `telp_customer` varchar(25) NOT NULL,
-  `keterangan_customer` text NOT NULL,
+  `keterangan_customer` text,
   `status_customer` enum('Active','Non Active') NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
@@ -402,20 +400,20 @@ CREATE TABLE `ms_customer` (
 --
 
 INSERT INTO `ms_customer` (`kode_customer`, `nama_customer`, `alamat_customer`, `telp_customer`, `keterangan_customer`, `status_customer`) VALUES
-('CU002', 'PT ISM Bogasari Cilincing', '', '-', '', 'Active'),
-('CU003', 'PT ISM Bogasari Cibitung (Existing)', '', '-', '', 'Active'),
-('CU004', 'PT ISM Bogasari Tangerang', '', '-', '', 'Active'),
-('CU005', 'ICBP Cikupa', '', '-', '', 'Active'),
-('CU006', 'PT Karunia Kreasi Cemerlang', '', '-', '', 'Active'),
-('CU007', 'PT IAP HO', '', '-', '', 'Active'),
-('CU008', 'PT IAP Jatake', '', '-', '', 'Active'),
-('CU009', 'PT IAP Bogor', '', '-', '', 'Active'),
-('CU010', 'NICI', '', '-', '', 'Active'),
-('CU011', 'PT SDM Harmoni', '', '-', '', 'Active'),
-('CU012', 'PT SDM Karawaci', '', '-', '', 'Active'),
-('CU013', 'PT ISM Bogasari Cibitung (Mill CD)', '', '-', '', 'Active'),
-('CU014', 'Plaza Mutiara', '', '-', '', 'Active'),
-('CU015', 'PT PTM Pusat', '', '-', '', 'Active');
+('CTM002', 'PT ISM Bogasari Cilincing', '', '-', '', 'Active'),
+('CTM003', 'PT ISM Bogasari Cibitung (Existing)', '', '-', '', 'Active'),
+('CTM004', 'PT ISM Bogasari Tangerang', '', '-', '', 'Active'),
+('CTM005', 'ICBP Cikupa', '', '-', '', 'Active'),
+('CTM006', 'PT Karunia Kreasi Cemerlang', '', '-', '', 'Active'),
+('CTM007', 'PT IAP HO', '', '-', '', 'Active'),
+('CTM008', 'PT IAP Jatake', '', '-', '', 'Active'),
+('CTM009', 'PT IAP Bogor', '', '-', '', 'Active'),
+('CTM010', 'NICI', '', '-', '', 'Active'),
+('CTM011', 'PT SDM Harmoni', '', '-', '', 'Active'),
+('CTM012', 'PT SDM Karawaci', '', '-', '', 'Active'),
+('CTM013', 'PT ISM Bogasari Cibitung (Mill CD)', '', '-', '', 'Active'),
+('CTM014', 'Plaza Mutiara', '', '-', '', 'Active'),
+('CTM015', 'PT PTM Pusat', '', '-', '', 'Active');
 
 -- --------------------------------------------------------
 
@@ -456,7 +454,7 @@ INSERT INTO `ms_layanan` (`kode_layanan`, `nama_layanan`, `keterangan_layanan`, 
 --
 
 CREATE TABLE `ms_merk` (
-  `kode_merk` char(3) NOT NULL,
+  `kode_merk` varchar(20) NOT NULL,
   `nama_merk` varchar(50) DEFAULT NULL,
   `keterangan_merk` text,
   `status_merk` enum('Active','Non Active') DEFAULT 'Active'
@@ -467,14 +465,14 @@ CREATE TABLE `ms_merk` (
 --
 
 INSERT INTO `ms_merk` (`kode_merk`, `nama_merk`, `keterangan_merk`, `status_merk`) VALUES
-('001', 'Chemical', '-', 'Active'),
-('002', 'CHEMICAL PEST', '-', 'Active'),
-('003', 'NON-CHEMICAL', '-', 'Active'),
-('004', 'Non Chemical pest', '-', 'Active'),
-('008', 'TOOLS', '-', 'Active'),
-('009', 'TOOLS PEST', '-', 'Active'),
-('010', 'UNIFORM', '-', 'Active'),
-('011', 'UNIFORM PEST', '-', 'Active');
+('MRK001', 'Chemical\r\n', '-', 'Active'),
+('MRK002', 'CHEMICAL PEST\r\n', '-', 'Active'),
+('MRK003', 'NON-CHEMICAL\r\n', '-', 'Active'),
+('MRK004', 'Non Chemical pest\r\n', '-', 'Active'),
+('MRK008', 'TOOLS', '-', 'Active'),
+('MRK009', 'TOOLS PEST\r\n', '-', 'Active'),
+('MRK010', 'UNIFORM\r\n', '-', 'Active'),
+('MRK011', 'UNIFORM PEST', '-', 'Active');
 
 -- --------------------------------------------------------
 
@@ -505,7 +503,7 @@ INSERT INTO `ms_toko` (`nama_toko`, `moto_toko`, `alamat_toko`, `telp_toko`, `em
 --
 
 CREATE TABLE `ms_type` (
-  `kode_type` char(3) NOT NULL,
+  `kode_type` varchar(20) NOT NULL,
   `nama_type` varchar(150) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `nama_kodsup` varchar(50) NOT NULL,
   `nama_pic` varchar(120) NOT NULL,
@@ -521,73 +519,73 @@ CREATE TABLE `ms_type` (
 --
 
 INSERT INTO `ms_type` (`kode_type`, `nama_type`, `nama_kodsup`, `nama_pic`, `alamat_sup`, `no_telepon`, `sup_note`, `keterangan_type`, `status_type`) VALUES
-('016', 'AGAZHIA', 'CL-009', 'Ibu Kiky', 'Jl. Pamularsih I No. 3', 'Hp. 08112940977', 'C-Noil', 'Barang', 'Active'),
-('017', 'AZKIA TANAH ABANG\r\n', 'CL-008', 'Ibu Icha', 'Rukan Citra Graha Jl Panjang No. 26 Rt 006  Rw. 001 Kel. Kedoya Selatan Kec. Kebon Jeruk Jarta Barat', 'Hp. 081297111391', 'Bubuk Pembersih', 'Barang', 'Active'),
-('018', 'BERKAH JAYA SENTOSA\r\n', 'CL-007', 'Ibu Dewi', 'Jl. Gajah 68 B Kel. Gayamsari Kec Gayamsari Semarang', 'HP. 0817293832', 'Pembersih Lantai', 'Barang', 'Active'),
-('019', 'CAREFOUR\r\n', 'CL-005', 'Bpk. Dede', 'Ruko Sinergi Antapani Kav. 17, Jl. Parakan Saat, Bandung', 'Hp. 082218267596', 'Chemical C-Noil', 'Barang', 'Active'),
-('020', 'CV BERKAT ANUGERAH JAYA\r\n', 'CL-002', 'Bpk. Ronny Jackson', 'Jl. Rawa Gelam IV No. 14 Kawasan Industri Polu Gadung Jakarta - Timur', 'T. 021-4602666,', 'Chemical Jhonson ', 'Barang', 'Active'),
-('021', 'CV SANHA SUKSES\r\n', 'CL-003', 'Bpk. Hasiando', 'Jl. Cacing Kampung Baru KM. 2 Rt. 007 Rw. 008 ', 'T. 021-5222172', 'Chemical Fresha NC, NF', 'Barang', 'Active'),
-('022', 'DNL TANAH ABANG\r\n', 'CL-004', 'Ibu Kristine Sunny', 'Jl. Greges Jaya II Kav. 8B, A23  Surabaya 60193', 'T. 031-7495605', 'Tissue & Chemical', 'Barang', 'Active'),
-('023', 'GUNA PLASTIK\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('024', 'INDOGROSIR\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('025', 'IRA BUSANA\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('026', 'JASMINE TOKO BESI\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('028', 'JEMBATAN BESI\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('027', 'JOKER\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('029', 'KALAPETONG\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('030', 'KURNIA JAYA\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('031', 'MILLERS', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('074', 'CV MITRA MULIA SEJAHTERA', 'TS-017', 'BPK ROY', 'JL. PISANGAN BARU TENGAH NO. 33 RT 013 RW 008, KEL. PISANGAN BARU, KEC. MATRAMAN, JAKARTA TIMUR', '021-8507888', '', 'Barang', 'Active'),
-('033', 'OUTDOOR STATION\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('034', 'PAK ROWAN\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('035', 'PAKAN IKAN KEMAYORAN\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('036', 'PD SELAMET\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('037', 'PT ACE HARDWARE\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('038', 'PT DINAMIKA MAJU USAHA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('039', 'PT DUA BERLIAN\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('076', 'PT DWIMITRA MULTI PRATAMA', 'CL-008', 'IBU ICHA', 'RUKAN CITRA GRAHA JL PANJANG NO. 26 RT 006 RW 001, KEL. KEDOYA SELATAN, KEC. KEBON JERUK JAKARTA BARAT ', '081297111391', '', 'Barang', 'Active'),
-('041', 'PT INDOKITA MAKMUR\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('042', 'PT INDONESIA INDUSTRI PERKASA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('073', 'PT INTIKARYA SUKSES ABADI', 'TS-012', 'BPK ALVIN', 'JL JELAMBAR UTARA RAYA NO. 19 C JAKARTA 11460', '081266757889', '', 'Barang', 'Active'),
-('044', 'PT JALY INDONESIA UTAMA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('045', 'PT JAYASEGAR BERKAT MANDIRI\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('046', 'PT PENTA PRIMA GEMILANG\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('079', 'PT SEGORO INTERNASIONAL', 'PC-009', 'IBU PIA', 'JL SUCI NO.10 RT 001 RW 003 SUSUKAN CIRACAS', '021-29835944', '', 'Barang', 'Active'),
-('049', 'UD TANI \r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('050', 'VISTA JAYA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('051', 'TRUBUS\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('052', 'UD PASIFIC MENTARI\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('053', 'TUSIMA VENDOR\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('054', 'TOKO UTAMA PS JATINEGARA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('055', 'TOKO UTAMA JEMBATAN LIMA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('056', 'TOKO SINAR MANGGA DUA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('057', 'TOKO SETIA \r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('058', 'TOKO LARIS PS PETOKO\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('059', 'TOKO KELVIN\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('060', 'TOKO JEMBATAN LIMA', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('061', 'TOKO AMIN JATINEGARA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('062', 'PT. ACE HARDWARE \r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
-('063', 'PT SEHO MAKMUR INDUSTRI', 'SS-002', 'IBU HERLINA', 'RULO KEBUN JERUK BARU BLOK A - 18 JL. ARJUNA SELATAN, JAKARTA BARAT 11530', '021-5349737', '', 'Barang', 'Active'),
-('064', 'PT MITRA JAYA PERSADA', 'TS-004', 'BPK WAWAN', 'JL. RAYA PENGGILINGAN NO. 16, RT 007 RW 001, CAKUNG BARAT, JAKARTA TIMUR', '085776715268', 'DISTRIBUTOR TISSUE TESSA UNTUK AREA JAKARTA UTARA, CAKUNG DAN BEKASI', 'Barang', 'Active'),
-('065', 'PT JERINDO JAYA ABADI', 'TS-006', 'IBU TITIN ', 'JL. RAYA SEDATI WARU, KOMP PERGUDANGAN 88 B.1 - B.23 KEL. PABEAN,KEC. SEDATI - SURABAYA', '081331494771', 'DISTRIBUTOR TISSUE LIVI UNTUK AREA SURABAYA', 'Barang', 'Active'),
-('066', 'PT UNIRAMA DUTA NIAGA', 'TS-007', 'IBU YAYUK', 'JL. KELAPA DUA WETAN NO. 09, KELAPA DUA WETAN, CIRACAS JAKARTA SELATAN', '081390404743', 'DISTRIBUTOR TISSUE LIVI UNTUK AREA SEMARANG', 'Barang', 'Active'),
-('067', 'PT AGUNG MANDIRI SENTOSA', 'TS-008', 'BPK SIGIT', 'RUKO PERMATA ANCOL BLOK I, JL. RE MARTADINATA, JAKARTA UTARA 14420', '08888958218', '', 'Barang', 'Active'),
-('068', 'JNI MITRAJAYA', 'CL-004', 'IBU RUSTY', 'JL. GREGES JAYA II KAV. 8B, A23 SURABAYA 60193', '081231740419', 'DISTRIBUTOR CHEMICAL JHONSON AREA SURABAYA', 'Barang', 'Active'),
-('069', 'CV. MAKMUR ABADI', 'CL-007', 'IBU DWEI', 'JL. GAJAH 68 B KEL, GAYAMSARI KEC, GAYAMSARI SEMARANG', '0817293832', '', 'Barang', 'Active'),
-('070', 'PT MATRA DUTA', 'TS-003', 'IBU NANIK', 'JL. LET JEND SUPRAPTO JAKARTA PUSAT', '08112906779', '', 'Barang', 'Active'),
-('071', 'UD SUMBER ARTHA LANGGENG', 'TS-011', 'IBU GRACIA', 'JL. RAYA DAAN MOGOT NO. 10 A, JAKARTA BARAT 11460', '08111894138', '', 'Barang', 'Active'),
-('072', 'PT ALIF KHADAFI INDONESIA', 'TS-016', 'BPK ANTON', 'JL. PAHLAWAN KOMP TAMAN JUANDA BLOK P2 NO. 10 RT 009 RW 004 KEL, DUREN JAYA, KEC. BEKASI TIMUR', '0813811115645', '', 'Barang', 'Active'),
-('075', 'PT GRAHA ESA', 'PC-004', 'BPK TRIADI', 'KOMPLEK GADING BUKIT INDAH BLOK TA 16 KELAPA GADING JAKARTA UTARA', '021-29451101', '', 'Barang', 'Active'),
-('077', 'PT DWIMITRA AGRITECH HUTAMA', 'PC-006', 'BPK IRVAN', 'JL TAMAN TEKNO BSD SEKTOR XI BLOK A/21, KEL. SETU KEC. SETU KOTA TANGERANG SELATAN', '021-755875390', '', 'Barang', 'Active'),
-('078', 'PT BENTZ JAZ INDONESIA', 'PC-007', 'BPK TAUFIK', 'KOMP RUKO GRAHA MAS BLOK B NO. 24 JL RAYA PERJUANGAN NO. 01 RT 003 JAKARTA BARAT', '021-5303770', '', 'Barang', 'Active'),
-('080', 'CV WINA MULYO LESTARI', 'PC-010', 'IBU WULAN', 'JL ANGKASA NO. 18 GD PELNI LT 3 KEL. GUNUNG SAHARI, KEMAYORAN JAKARTA PUSAT', '021-68787164', '', 'Barang', 'Active'),
-('081', 'PT PRAKARSA ZETA MANDIRI', 'PC-011', 'BPK AGUNG', 'VILLA MUTIARA PLUIT BLOK F NO. 3B RT 003 RW 009 KEL. PRIUK KEC PRIUK KOTA TANGERANG', '08128327876', '', 'Barang', 'Active'),
-('082', 'PT UICCP INDONESIA', 'DT-001', 'IBU IKA', 'RUKO NEW JASMINE BLOK HA 16 NO. 7-8 GADING SERPONG TANGERANG, BANTEN 15810', '021-22225070', '', 'Barang', 'Active'),
-('083', 'SUGI MANDIRI', 'PB-001', 'AYU', 'LTC Glodok GF 1 Blok 11 No.7', '021-62320061', '', 'Barang', 'Active'),
-('084', 'DEPOTEKNIK DUTA PERKAKAS', 'PB-002', 'MEY', '', '021-6255333', '', 'Part', 'Active'),
-('085', 'TOKO ARIES 167', 'PB-003', '', 'Jakarta', '021-6344524', '', 'Barang', 'Active'),
-('086', 'BIG BEN GROSIR', 'PB-004', '', 'Jakarta', '08561116918', '', 'Barang', 'Active'),
-('087', 'PT. MENTARI JASINDO SENTOSA', 'PB-005', 'IREN', 'Jl. Mangga Besar I No.165E, RT.10/RW.1, Mangga Besar, Kec. Taman Sari, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11180', '081316726782', '', 'Barang', 'Active');
+('SPL016', 'AGAZHIA', 'CL-009', 'Ibu Kiky', 'Jl. Pamularsih I No. 3', 'Hp. 08112940977', 'C-Noil', 'Barang', 'Active'),
+('SPL017', 'AZKIA TANAH ABANG\r\n', 'CL-008', 'Ibu Icha', 'Rukan Citra Graha Jl Panjang No. 26 Rt 006  Rw. 001 Kel. Kedoya Selatan Kec. Kebon Jeruk Jarta Barat', 'Hp. 081297111391', 'Bubuk Pembersih', 'Barang', 'Active'),
+('SPL018', 'BERKAH JAYA SENTOSA\r\n', 'CL-007', 'Ibu Dewi', 'Jl. Gajah 68 B Kel. Gayamsari Kec Gayamsari Semarang', 'HP. 0817293832', 'Pembersih Lantai', 'Barang', 'Active'),
+('SPL019', 'CAREFOUR\r\n', 'CL-005', 'Bpk. Dede', 'Ruko Sinergi Antapani Kav. 17, Jl. Parakan Saat, Bandung', 'Hp. 082218267596', 'Chemical C-Noil', 'Barang', 'Active'),
+('SPL020', 'CV BERKAT ANUGERAH JAYA\r\n', 'CL-002', 'Bpk. Ronny Jackson', 'Jl. Rawa Gelam IV No. 14 Kawasan Industri Polu Gadung Jakarta - Timur', 'T. 021-4602666,', 'Chemical Jhonson ', 'Barang', 'Active'),
+('SPL021', 'CV SANHA SUKSES\r\n', 'CL-003', 'Bpk. Hasiando', 'Jl. Cacing Kampung Baru KM. 2 Rt. 007 Rw. 008 ', 'T. 021-5222172', 'Chemical Fresha NC, NF', 'Barang', 'Active'),
+('SPL022', 'DNL TANAH ABANG\r\n', 'CL-004', 'Ibu Kristine Sunny', 'Jl. Greges Jaya II Kav. 8B, A23  Surabaya 60193', 'T. 031-7495605', 'Tissue & Chemical', 'Barang', 'Active'),
+('SPL023', 'GUNA PLASTIK\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL024', 'INDOGROSIR\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL025', 'IRA BUSANA\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL026', 'JASMINE TOKO BESI\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL028', 'JEMBATAN BESI\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL027', 'JOKER\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL029', 'KALAPETONG\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL030', 'KURNIA JAYA\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL031', 'MILLERS', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL074', 'CV MITRA MULIA SEJAHTERA', 'TS-017', 'BPK ROY', 'JL. PISANGAN BARU TENGAH NO. 33 RT 013 RW 008, KEL. PISANGAN BARU, KEC. MATRAMAN, JAKARTA TIMUR', '021-8507888', '', 'Barang', 'Active'),
+('SPL033', 'OUTDOOR STATION\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL034', 'PAK ROWAN\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL035', 'PAKAN IKAN KEMAYORAN\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL036', 'PD SELAMET\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL037', 'PT ACE HARDWARE\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL038', 'PT DINAMIKA MAJU USAHA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL039', 'PT DUA BERLIAN\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL076', 'PT DWIMITRA MULTI PRATAMA', 'CL-008', 'IBU ICHA', 'RUKAN CITRA GRAHA JL PANJANG NO. 26 RT 006 RW 001, KEL. KEDOYA SELATAN, KEC. KEBON JERUK JAKARTA BARAT ', '081297111391', '', 'Barang', 'Active'),
+('SPL041', 'PT INDOKITA MAKMUR\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL042', 'PT INDONESIA INDUSTRI PERKASA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL073', 'PT INTIKARYA SUKSES ABADI', 'TS-012', 'BPK ALVIN', 'JL JELAMBAR UTARA RAYA NO. 19 C JAKARTA 11460', '081266757889', '', 'Barang', 'Active'),
+('SPL044', 'PT JALY INDONESIA UTAMA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL045', 'PT JAYASEGAR BERKAT MANDIRI\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL046', 'PT PENTA PRIMA GEMILANG\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL079', 'PT SEGORO INTERNASIONAL', 'PC-009', 'IBU PIA', 'JL SUCI NO.10 RT 001 RW 003 SUSUKAN CIRACAS', '021-29835944', '', 'Barang', 'Active'),
+('SPL049', 'UD TANI \r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL050', 'VISTA JAYA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL051', 'TRUBUS\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL052', 'UD PASIFIC MENTARI\r\n\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL053', 'TUSIMA VENDOR\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL054', 'TOKO UTAMA PS JATINEGARA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL055', 'TOKO UTAMA JEMBATAN LIMA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL056', 'TOKO SINAR MANGGA DUA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL057', 'TOKO SETIA \r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL058', 'TOKO LARIS PS PETOKO\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL059', 'TOKO KELVIN\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL060', 'TOKO JEMBATAN LIMA', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL061', 'TOKO AMIN JATINEGARA\r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL062', 'PT. ACE HARDWARE \r\n', 'CL-006', 'Ibu Kristina', 'Jl. MT. Haryono Kav. 23 Rt 008 Rw 009 Tebet Timur Jakarta Selatan', 'HP. 081231454120', 'Chemical', 'Barang', 'Active'),
+('SPL063', 'PT SEHO MAKMUR INDUSTRI', 'SS-002', 'IBU HERLINA', 'RULO KEBUN JERUK BARU BLOK A - 18 JL. ARJUNA SELATAN, JAKARTA BARAT 11530', '021-5349737', '', 'Barang', 'Active'),
+('SPL064', 'PT MITRA JAYA PERSADA', 'TS-004', 'BPK WAWAN', 'JL. RAYA PENGGILINGAN NO. 16, RT 007 RW 001, CAKUNG BARAT, JAKARTA TIMUR', '085776715268', 'DISTRIBUTOR TISSUE TESSA UNTUK AREA JAKARTA UTARA, CAKUNG DAN BEKASI', 'Barang', 'Active'),
+('SPL065', 'PT JERINDO JAYA ABADI', 'TS-006', 'IBU TITIN ', 'JL. RAYA SEDATI WARU, KOMP PERGUDANGAN 88 B.1 - B.23 KEL. PABEAN,KEC. SEDATI - SURABAYA', '081331494771', 'DISTRIBUTOR TISSUE LIVI UNTUK AREA SURABAYA', 'Barang', 'Active'),
+('SPL066', 'PT UNIRAMA DUTA NIAGA', 'TS-007', 'IBU YAYUK', 'JL. KELAPA DUA WETAN NO. 09, KELAPA DUA WETAN, CIRACAS JAKARTA SELATAN', '081390404743', 'DISTRIBUTOR TISSUE LIVI UNTUK AREA SEMARANG', 'Barang', 'Active'),
+('SPL067', 'PT AGUNG MANDIRI SENTOSA', 'TS-008', 'BPK SIGIT', 'RUKO PERMATA ANCOL BLOK I, JL. RE MARTADINATA, JAKARTA UTARA 14420', '08888958218', '', 'Barang', 'Active'),
+('SPL068', 'JNI MITRAJAYA', 'CL-004', 'IBU RUSTY', 'JL. GREGES JAYA II KAV. 8B, A23 SURABAYA 60193', '081231740419', 'DISTRIBUTOR CHEMICAL JHONSON AREA SURABAYA', 'Barang', 'Active'),
+('SPL069', 'CV. MAKMUR ABADI', 'CL-007', 'IBU DWEI', 'JL. GAJAH 68 B KEL, GAYAMSARI KEC, GAYAMSARI SEMARANG', '0817293832', '', 'Barang', 'Active'),
+('SPL070', 'PT MATRA DUTA', 'TS-003', 'IBU NANIK', 'JL. LET JEND SUPRAPTO JAKARTA PUSAT', '08112906779', '', 'Barang', 'Active'),
+('SPL071', 'UD SUMBER ARTHA LANGGENG', 'TS-011', 'IBU GRACIA', 'JL. RAYA DAAN MOGOT NO. 10 A, JAKARTA BARAT 11460', '08111894138', '', 'Barang', 'Active'),
+('SPL072', 'PT ALIF KHADAFI INDONESIA', 'TS-016', 'BPK ANTON', 'JL. PAHLAWAN KOMP TAMAN JUANDA BLOK P2 NO. 10 RT 009 RW 004 KEL, DUREN JAYA, KEC. BEKASI TIMUR', '0813811115645', '', 'Barang', 'Active'),
+('SPL075', 'PT GRAHA ESA', 'PC-004', 'BPK TRIADI', 'KOMPLEK GADING BUKIT INDAH BLOK TA 16 KELAPA GADING JAKARTA UTARA', '021-29451101', '', 'Barang', 'Active'),
+('SPL077', 'PT DWIMITRA AGRITECH HUTAMA', 'PC-006', 'BPK IRVAN', 'JL TAMAN TEKNO BSD SEKTOR XI BLOK A/21, KEL. SETU KEC. SETU KOTA TANGERANG SELATAN', '021-755875390', '', 'Barang', 'Active'),
+('SPL078', 'PT BENTZ JAZ INDONESIA', 'PC-007', 'BPK TAUFIK', 'KOMP RUKO GRAHA MAS BLOK B NO. 24 JL RAYA PERJUANGAN NO. 01 RT 003 JAKARTA BARAT', '021-5303770', '', 'Barang', 'Active'),
+('SPL080', 'CV WINA MULYO LESTARI', 'PC-010', 'IBU WULAN', 'JL ANGKASA NO. 18 GD PELNI LT 3 KEL. GUNUNG SAHARI, KEMAYORAN JAKARTA PUSAT', '021-68787164', '', 'Barang', 'Active'),
+('SPL081', 'PT PRAKARSA ZETA MANDIRI', 'PC-011', 'BPK AGUNG', 'VILLA MUTIARA PLUIT BLOK F NO. 3B RT 003 RW 009 KEL. PRIUK KEC PRIUK KOTA TANGERANG', '08128327876', '', 'Barang', 'Active'),
+('SPL082', 'PT UICCP INDONESIA', 'DT-001', 'IBU IKA', 'RUKO NEW JASMINE BLOK HA 16 NO. 7-8 GADING SERPONG TANGERANG, BANTEN 15810', '021-22225070', '', 'Barang', 'Active'),
+('SPL083', 'SUGI MANDIRI', 'PB-001', 'AYU', 'LTC Glodok GF 1 Blok 11 No.7', '021-62320061', '', 'Barang', 'Active'),
+('SPL084', 'DEPOTEKNIK DUTA PERKAKAS', 'PB-002', 'MEY', '', '021-6255333', '', 'Part', 'Active'),
+('SPL085', 'TOKO ARIES 167', 'PB-003', '', 'Jakarta', '021-6344524', '', 'Barang', 'Active'),
+('SPL086', 'BIG BEN GROSIR', 'PB-004', '', 'Jakarta', '08561116918', '', 'Barang', 'Active'),
+('SPL087', 'PT. MENTARI JASINDO SENTOSA', 'PB-005', 'IREN', 'Jl. Mangga Besar I No.165E, RT.10/RW.1, Mangga Besar, Kec. Taman Sari, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11180', '081316726782', '', 'Barang', 'Active');
 
 -- --------------------------------------------------------
 
@@ -614,7 +612,7 @@ CREATE TABLE `ms_user` (
 --
 
 INSERT INTO `ms_user` (`kode_user`, `nama_user`, `telp_user`, `alamat_user`, `email_user`, `kelamin_user`, `username_user`, `password_user`, `status_user`, `user_group`, `jenis_user`) VALUES
-('U0001', 'Administrator', '081220209020', 'Jaksel', 'info@grabit.web.id', 'Pria', 'admin', '0192023a7bbd73250516f069df18b500', 'Active', 1, NULL),
+('U0001', 'Administrator', '0812202090201', 'Jaksel', 'info@grabit.web.id', 'Wanita', 'admin', '0192023a7bbd73250516f069df18b500', 'Active', 1, 'Admin'),
 ('U0005', 'Yandi Syafitra', '', 'Jl. Griya Tirtayasa', '', 'Pria', 'Yandi', '81dc9bdb52d04dc20036dbd8313ed055', 'Active', 3, 'Teknisi'),
 ('U0006', 'Erni Sumirat', '', '', '', 'Wanita', 'erni', 'af6b3aa8c3fcd651674359f500814679', 'Active', 3, 'Teknisi'),
 ('U0007', 'M Taufik Akbar', '', '', '', 'Pria', 'taufik', '70f32b0989903de63dde4ea96d5d4000', 'Active', 3, 'Teknisi'),
@@ -1467,7 +1465,7 @@ ALTER TABLE `ms_atm`
 -- AUTO_INCREMENT for table `ms_barang`
 --
 ALTER TABLE `ms_barang`
-  MODIFY `id_barang` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2254;
+  MODIFY `id_barang` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2255;
 
 --
 -- AUTO_INCREMENT for table `sys_akses`
@@ -1479,7 +1477,7 @@ ALTER TABLE `sys_akses`
 -- AUTO_INCREMENT for table `sys_group`
 --
 ALTER TABLE `sys_group`
-  MODIFY `group_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `group_id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sys_menu`

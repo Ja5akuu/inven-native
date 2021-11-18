@@ -1,4 +1,18 @@
 <?php
+$qry	= mysqli_query($koneksi,"SELECT MAX(kode_customer) as kodeTerbesar FROM ms_customer ");
+$row	= mysqli_fetch_array($qry); 
+$kodeBarang = $row['kodeTerbesar'];
+
+
+$urutan = (int) substr($kodeBarang, 3, 3);
+
+
+$urutan++;
+
+$huruf = "CTM";
+$kodeBarang = $huruf . sprintf("%03s", $urutan);
+
+
 	if(isset($_POST['btnSave'])){
 		$message = array();
 		if (trim($_POST['txtNama'])=="") {
@@ -18,8 +32,8 @@
 		$cmbStatus		= $_POST['cmbStatus'];
 
 
-		if(count($message)==0){			
-			$kodeBaru	= buatKode("ms_customer", "CU");
+		if(count($message)==0){		
+			$kodeBaru	= $_POST['kode'];
 			$qrySave=mysqli_query($koneksi,"INSERT INTO ms_customer SET kode_customer='$kodeBaru', 
 															nama_customer='$txtNama', 
 															telp_customer='$txtTelpon',
@@ -42,7 +56,7 @@
 			echo "</div>"; 
 		}
 	} 
-	$dataKode		= buatKode("ms_customer", "CU");
+	$dataKode		= $kodeBarang;
 	$dataNama		= isset($_POST['txtNama']) ? $_POST['txtNama'] : '';
 	$dataTelpon 	= isset($_POST['txtTelpon']) ? $_POST['txtTelpon'] : '';
 	$dataStatus 	= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
@@ -62,7 +76,7 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">Kode :</label>
 					<div class="col-md-2">
-						<input class="form-control" type="text" value="<?php echo $dataKode; ?>" disabled="disabled"/>
+						<input class="form-control" type="text" value="<?php echo $dataKode; ?>" name="kode" readonly/>
 					</div>
 				</div>
 				<div class="form-group">

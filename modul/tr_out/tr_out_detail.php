@@ -7,8 +7,8 @@
 				LEFT JOIN ms_customer d ON a.kode_customer=d.kode_customer
 				LEFT JOIN ms_atm e ON a.id_atm=e.id_atm
 				AND a.kode_out='".$kodeTransaksi."'";
-	$beliQry = mysql_query($beliSql, $koneksidb)  or die ("Query pendaftaran salah : ".mysql_error());
-	$beliRow = mysql_fetch_array($beliQry);
+	$beliQry = mysqli_query($koneksi,$beliSql)  or die ("Query pendaftaran salah : ".mysqli_error());
+	$beliRow = mysqli_fetch_array($beliQry);
 ?>
 <div class="portlet box blue">
 	<div class="portlet-title">
@@ -64,10 +64,10 @@
 													INNER JOIN ms_barang b ON a.id_barang=b.id_barang 
 												  	WHERE a.kode_out='$kodeTransaksi'
 												  ORDER BY a.id_barang ASC";
-								$listBarangQry = mysql_query($listBarangSql, $koneksidb)  or die ("Query list barang salah : ".mysql_error());
+								$listBarangQry = mysqli_query($koneksi,$listBarangSql)  or die ("Query list barang salah : ".mysqli_error());
 								
 								$nomor	= 0;
-								while ($listBarangRow = mysql_fetch_array($listBarangQry)) {
+								while ($listBarangRow = mysqli_fetch_array($listBarangQry)) {
 								$ID			= $listBarangRow['id'];										
 								$nomor++;
 						?>

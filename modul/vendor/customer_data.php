@@ -3,8 +3,8 @@
 		$txtID 		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {
 				
-			$hapus=mysql_query("DELETE FROM ms_customer WHERE kode_customer='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+			$hapus=mysqli_query($koneksi,"DELETE FROM ms_customer WHERE kode_customer='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 				
 			if($hapus){
 				$_SESSION['pesan'] = 'Data customer berhasil dihapus';
@@ -42,9 +42,9 @@
 				<tbody>
                     <?php
 						$dataSql = "SELECT * FROM ms_customer ORDER BY kode_customer DESC";
-						$dataQry = mysql_query($dataSql, $koneksidb)  or die ("Query customer salah : ".mysql_error());
+						$dataQry = mysqli_query($koneksi,$dataSql)  or die ("Query customer salah : ".mysqli_error());
 						$nomor  = 0; 
-						while ($data = mysql_fetch_array($dataQry)) {
+						while ($data = mysqli_fetch_array($dataQry)) {
 						$nomor++;
 						$Kode = $data['kode_customer'];
 					?>

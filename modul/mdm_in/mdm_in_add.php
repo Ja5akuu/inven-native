@@ -114,7 +114,7 @@ if($_POST) {
 
 					
 				}
-				mysqli_query("DELETE FROM tr_in_tmp WHERE kode_user='".$_SESSION['kode_user']."'",                    ) 
+				mysqli_query($koneksi,"DELETE FROM tr_in_tmp WHERE kode_user='".$_SESSION['kode_user']."'",                    ) 
 						or die ("Gagal kosongkan tmp".mysqli_error());
 					
 				$_SESSION['pesan'] = 'Penerimaan barang dengan nomor transaksi '.$kodeBaru.' berhasil dibuat';
@@ -144,7 +144,7 @@ $dataCatatan	= isset($_POST['txtCatatan']) ? $_POST['txtCatatan'] : '';
 		
 <div class="portlet box blue">
 	<div class="portlet-title">
-		<div class="caption"><span class="caption-subject uppercase bold hidden-xs">Form Penerimaan Barang</span></div>
+		<div class="caption"><span class="caption-subject uppercase bold hidden-xs">Form Penerimsaan Barang</span></div>
 		<div class="actions">
 			<a href="<?php $_SERVER['PHP_SELF']; ?>" class="btn blue"><i class="icon-refresh"></i></a>
 			<a href="?page=dtmdmin" class="btn blue"><i class="icon-close"></i></a>

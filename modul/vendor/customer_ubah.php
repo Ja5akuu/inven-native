@@ -17,12 +17,12 @@
 		$cmbStatus		= $_POST['cmbStatus'];
 		
 		if(count($message)==0){	
-			$qryUpdate=mysql_query("UPDATE ms_customer SET nama_customer='$txtNama', 
+			$qryUpdate=mysqli_query($koneksi,"UPDATE ms_customer SET nama_customer='$txtNama', 
 								  							alamat_customer='$txtAlamat',
 															telp_customer='$txtTelpon',
 															status_customer='$cmbStatus'
 													WHERE kode_customer ='".$_POST['txtKode']."'") 
-					   or die ("Gagal query update".mysql_error());
+					   or die ("Gagal query update".mysqli_error());
 			if($qryUpdate){
 				$_SESSION['pesan'] = 'Data customer berhasil diperbaharui';
 				echo '<script>window.location="?page=datacustomer"</script>';
@@ -43,8 +43,8 @@
 	} 
 	$KodeEdit= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
 	$sqlShow = "SELECT * FROM ms_customer WHERE kode_customer='$KodeEdit'";
-	$qryShow = mysql_query($sqlShow, $koneksidb)  or die ("Query ambil data customer salah : ".mysql_error());
-	$dataShow = mysql_fetch_array($qryShow);
+	$qryShow = mysqli_query($koneksi,$sqlShow)  or die ("Query ambil data customer salah : ".mysqli_error());
+	$dataShow = mysqli_fetch_array($qryShow);
 	
 	$dataKode		= $dataShow['kode_customer'];
 	$dataNama		= isset($dataShow['nama_customer']) ?  $dataShow['nama_customer'] : $_POST['txtNama'];

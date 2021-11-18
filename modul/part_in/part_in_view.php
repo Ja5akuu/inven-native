@@ -4,8 +4,8 @@
 	$beliSql = "SELECT * FROM tr_in a
 				INNER JOIN ms_user b ON a.kode_user=b.kode_user
 				AND a.kode_in='".$kodeTransaksi."'";
-	$beliQry = mysql_query($beliSql, $koneksidb)  or die ("Query pendaftaran salah : ".mysql_error());
-	$beliRow = mysql_fetch_array($beliQry);
+	$beliQry = mysqli_query($koneksi,$beliSql)  or die ("Query pendaftaran salah : ".mysqli_error());
+	$beliRow = mysqli_fetch_array($beliQry);
 ?>
 <div class="portlet box blue">
 	<div class="portlet-title">
@@ -67,10 +67,10 @@
 													LEFT JOIN ms_type d ON b.kode_type=d.kode_type
 												  	WHERE a.kode_in='$kodeTransaksi'
 												  ORDER BY a.id_barang ASC";
-								$listBarangQry = mysql_query($listBarangSql, $koneksidb)  or die ("Query list barang salah : ".mysql_error());
+								$listBarangQry = mysqli_query($koneksi,$listBarangSql)  or die ("Query list barang salah : ".mysqli_error());
 								
 								$nomor	= 0;
-								while ($listBarangRow = mysql_fetch_array($listBarangQry)) {
+								while ($listBarangRow = mysqli_fetch_array($listBarangQry)) {
 								$ID			= $listBarangRow['id'];										
 								$nomor++;
 						?>

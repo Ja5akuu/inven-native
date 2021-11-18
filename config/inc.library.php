@@ -4,44 +4,49 @@ date_default_timezone_set("Asia/Jakarta");
 # Fungsi untuk membuat kode automatis
 function kodeUnik($tabel, $field, $inisial, $panjang,$tanggal){
 
- 	$qry	= mysqli_query("SELECT MAX(".$field.") FROM $tabel WHERE date(".$tanggal.")='".date('Y-m-d')."'");
- 	$row	= mysqli_fetch_array($qry); 
- 	if ($row[0]=="") {
- 		$angka=0;
-	}
- 	else {
- 		$angka		= substr($row[0], strlen($inisial));
- 	}
-	
- 	$angka++;
- 	$angka	=strval($angka); 
- 	$tmp	="";
- 	for($i=1; $i<=($panjang-strlen($inisial)-strlen($angka)); $i++) {
-		$tmp=$tmp."0";	
-	}
- 	return $inisial.$tmp.$angka;
-}
-function buatKode($tabel, $inisial){
-	$struktur	= mysqli_query("SELECT * FROM $tabel");
-	$field		= mysqli_field_name($struktur,0);
-	$panjang	= mysqli_field_len($struktur,0);
+	$qry	= mysqli_query($koneksi,"SELECT MAX(".$field.") FROM $tabel WHERE date(".$tanggal.")='".date('Y-m-d')."'");
+	$row	= mysqli_fetch_array($qry); 
 
- 	$qry	= mysqli_query("SELECT MAX(".$field.") FROM ".$tabel);
- 	$row	= mysqli_fetch_array($qry); 
- 	if ($row[0]=="") {
- 		$angka=0;
+
+	if ($row[0]=="") {
+		$angka=0;
 	}
- 	else {
- 		$angka		= substr($row[0], strlen($inisial));
- 	}
+	else {
+		$angka		= substr($row[0], strlen($inisial));
+	}
 	
- 	$angka++;
- 	$angka	=strval($angka); 
- 	$tmp	="";
- 	for($i=1; $i<=($panjang-strlen($inisial)-strlen($angka)); $i++) {
+	$angka++;
+	$angka	=strval($angka); 
+	$tmp	="";
+	for($i=1; $i<=($panjang-strlen($inisial)-strlen($angka)); $i++) {
 		$tmp=$tmp."0";	
 	}
- 	return $inisial.$tmp.$angka;
+	return $inisial.$tmp.$angka;
+}
+
+function buatKode($tabel, $inisial){
+
+	$struktur	= mysqli_query($koneksi,"SELECT * FROM ".$tabel."") ;
+	$field		= mysqli_fetch_field_direct($struktur, 0)->name; //mysqli_fetch_fields($struktur,0);
+	$panjang	= mysqli_fetch_field_direct($struktur, 0)->length;//mysqli_field_len($struktur,0);
+
+	$qry	= mysqli_query($koneksi,"SELECT MAX(".$field.") FROM ".$tabel."");
+	$row	= mysqli_fetch_array($qry); 
+	if ($row[0]=="") {
+		$angka=0;
+	}
+	else {
+		$angka		= substr($row[0], strlen($inisial));
+	}
+
+	$angka++;
+	$angka	=strval($angka); 
+
+	$tmp	="";
+	for($i=1; $i<=($panjang-strlen($inisial)-strlen($angka)); $i++) {
+		$tmp=$tmp."0";	
+	}
+	return $inisial.$tmp.$angka;
 }
 
 # Fungsi untuk membalik tanggal dari format Indo -> English
@@ -88,119 +93,119 @@ function umur($birthday){
 
 class pageNavi_Home{
 		// Fungsi untuk mencek halaman dan posisi data
-		function cariPosisi($batas) {
-			if(empty($_GET['page'])) {
-				$posisi = 0;
-				$_GET['page'] = 1;
-			} else {
-				$posisi = ($_GET['page'] - 1) * $batas;
-			}
-			return $posisi;
+	function cariPosisi($batas) {
+		if(empty($_GET['page'])) {
+			$posisi = 0;
+			$_GET['page'] = 1;
+		} else {
+			$posisi = ($_GET['page'] - 1) * $batas;
 		}
-		
+		return $posisi;
+	}
+
 		// Fungsi untuk menghitung total halaman
-		function jumlahHalaman($jmldata, $batas) {
-			$jmlhalaman = ceil($jmldata/$batas);
-			return $jmlhalaman;
-		}
-		
+	function jumlahHalaman($jmldata, $batas) {
+		$jmlhalaman = ceil($jmldata/$batas);
+		return $jmlhalaman;
+	}
+
 		// Fungsi untuk link halaman 1,2,3 
-		function navHalaman($halaman_aktif, $jmlhalaman) {
-			global $link;
-			
-			$link_halaman = "";
+	function navHalaman($halaman_aktif, $jmlhalaman) {
+		global $link;
+
+		$link_halaman = "";
 		
 			// Link ke halaman pertama (first) dan sebelumnya (prev)
-			if($halaman_aktif > 1) {
-				$prev = $halaman_aktif - 1;
-	
-				if($prev > 1) { 
-					$link_halaman .= "<a class=\"first\" href=\"page-1.html\"></a>";
-				}			
-				$link_halaman .= "<a class=\"previouspostslink\" href=\"page-".$prev.".html\"></a>";
-			}
-		
-			$angka = ($halaman_aktif > 3 ? "<span>...</span>" : " "); 
-			for($i = $halaman_aktif-2;$i < $halaman_aktif;$i++) {
-				if ($i < 1) continue;
-				$angka .= "<a href=\"page-".$i.".html\">".$i."</a>";
-			}
-			$angka .= "<span class=\"current\">".$halaman_aktif."</span>";
-			  
-			for($i=$halaman_aktif+1; $i<($halaman_aktif+3); $i++) {
-				if($i > $jmlhalaman) break;
-				$angka .= "<a href=\"page-".$i.".html\">".$i."</a>";
-			}
-			$angka .= ($halaman_aktif+2 < $jmlhalaman ? "<span>...</span><a href=\"page-".$jmlhalaman.".html\">".$jmlhalaman."</a>" : " ");
-		
-			$link_halaman .= $angka;
-			 
-			if($halaman_aktif < $jmlhalaman) {
-				$next = $halaman_aktif + 1;
-				$link_halaman .= "<a class=\"nextpostslink\" href=\"page-".$next.".html\"></a>";
-				
-				if($halaman_aktif != $jmlhalaman - 1) {
-					$link_halaman .= "<a class=\"last\" href=\"page-".$jmlhalaman.".html\"></a>";
-				}
-			}
-			
-			return $link_halaman;
+		if($halaman_aktif > 1) {
+			$prev = $halaman_aktif - 1;
+
+			if($prev > 1) { 
+				$link_halaman .= "<a class=\"first\" href=\"page-1.html\"></a>";
+			}			
+			$link_halaman .= "<a class=\"previouspostslink\" href=\"page-".$prev.".html\"></a>";
 		}
-	}	
-  date_default_timezone_set("UTC");
+		
+		$angka = ($halaman_aktif > 3 ? "<span>...</span>" : " "); 
+		for($i = $halaman_aktif-2;$i < $halaman_aktif;$i++) {
+			if ($i < 1) continue;
+			$angka .= "<a href=\"page-".$i.".html\">".$i."</a>";
+		}
+		$angka .= "<span class=\"current\">".$halaman_aktif."</span>";
 
-  function dateDiff($time1, $time2, $precision = 6) {
-    if (!is_int($time1)) {
-      $time1 = strtotime($time1);
-    }
-    if (!is_int($time2)) {
-      $time2 = strtotime($time2);
-    }
+		for($i=$halaman_aktif+1; $i<($halaman_aktif+3); $i++) {
+			if($i > $jmlhalaman) break;
+			$angka .= "<a href=\"page-".$i.".html\">".$i."</a>";
+		}
+		$angka .= ($halaman_aktif+2 < $jmlhalaman ? "<span>...</span><a href=\"page-".$jmlhalaman.".html\">".$jmlhalaman."</a>" : " ");
+		
+		$link_halaman .= $angka;
 
-    if ($time1 > $time2) {
-      $ttime = $time1;
-      $time1 = $time2;
-      $time2 = $ttime;
-    }
+		if($halaman_aktif < $jmlhalaman) {
+			$next = $halaman_aktif + 1;
+			$link_halaman .= "<a class=\"nextpostslink\" href=\"page-".$next.".html\"></a>";
 
-    $intervals = array('year','month','day','hour','minute','second');
-    $diffs = array();
+			if($halaman_aktif != $jmlhalaman - 1) {
+				$link_halaman .= "<a class=\"last\" href=\"page-".$jmlhalaman.".html\"></a>";
+			}
+		}
 
-    foreach ($intervals as $interval) {
-      $diffs[$interval] = 0;
-      $ttime = strtotime("+1 " . $interval, $time1);
-      while ($time2 >= $ttime) {
-$time1 = $ttime;
-$diffs[$interval]++;
-$ttime = strtotime("+1 " . $interval, $time1);
-      }
-    }
+		return $link_halaman;
+	}
+}	
+date_default_timezone_set("UTC");
 
-    $count = 0;
-    $times = array();
-    foreach ($diffs as $interval => $value) {
-      if ($count >= $precision) {
-break;
-      }
-      if ($value > 0) {
-if ($value != 1) {
- $interval .= "s";
+function dateDiff($time1, $time2, $precision = 6) {
+	if (!is_int($time1)) {
+		$time1 = strtotime($time1);
+	}
+	if (!is_int($time2)) {
+		$time2 = strtotime($time2);
+	}
+
+	if ($time1 > $time2) {
+		$ttime = $time1;
+		$time1 = $time2;
+		$time2 = $ttime;
+	}
+
+	$intervals = array('year','month','day','hour','minute','second');
+	$diffs = array();
+
+	foreach ($intervals as $interval) {
+		$diffs[$interval] = 0;
+		$ttime = strtotime("+1 " . $interval, $time1);
+		while ($time2 >= $ttime) {
+			$time1 = $ttime;
+			$diffs[$interval]++;
+			$ttime = strtotime("+1 " . $interval, $time1);
+		}
+	}
+
+	$count = 0;
+	$times = array();
+	foreach ($diffs as $interval => $value) {
+		if ($count >= $precision) {
+			break;
+		}
+		if ($value > 0) {
+			if ($value != 1) {
+				$interval .= "s";
+			}
+			$times[] = $value . " " . $interval;
+			$count++;
+		}
+	}
+
+	return implode(", ", $times);
 }
-$times[] = $value . " " . $interval;
-$count++;
-      }
-    }
-
-    return implode(", ", $times);
-  }
 
 function get_age($birth_date){
-date_default_timezone_set("Asia/Jakarta");
-return floor((time() - strtotime($birth_date))/31556926);
+	date_default_timezone_set("Asia/Jakarta");
+	return floor((time() - strtotime($birth_date))/31556926);
 }
 function sekianLama($format, $wkt) {
-    $sekarang = date("Y-m-d");
-    return date($format, strtotime(date("Y-m-d", strtotime($sekarang)) . " " . $wkt));
+	$sekarang = date("Y-m-d");
+	return date($format, strtotime(date("Y-m-d", strtotime($sekarang)) . " " . $wkt));
 }
 function restore($file) {
 	global $rest_dir;
@@ -230,7 +235,7 @@ function restore($file) {
 			{
 				if (substr($line, 0, 2) == '--' || $line == '')
 					continue;
-			 
+
 				$templine .= $line;
 
 				if (substr(trim($line), -1, 1) == ';'){
@@ -239,8 +244,8 @@ function restore($file) {
 				}
 			}
 			echo "<div class='alert alert-success alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-					<i class='icon-ok'></i> &nbsp;Berhasil Restore Database</div>";
-		
+			<i class='icon-ok'></i> &nbsp;Berhasil Restore Database</div>";
+
 		}else{
 			echo "Proses upload gagal, kode error = " . $file['error'];
 		}	

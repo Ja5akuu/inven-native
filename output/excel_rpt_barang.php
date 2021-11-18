@@ -38,7 +38,7 @@
 	$dataPrincipal	= $_GET['princ'];
 	$dataMerk		= $_GET['merk'];
 										
-	$dataSql = mysql_query("SELECT * FROM ms_barang a
+	$dataSql = mysqli_query($koneksi,"SELECT * FROM ms_barang a
 							LEFT JOIN ms_merk c ON a.kode_merk=c.kode_merk
 							LEFT JOIN ms_type d ON a.kode_type=d.kode_type
 							WHERE a.principal_barang LIKE '$dataPrincipal'
@@ -47,7 +47,7 @@
 	
 	$nomor  		= 0;
 	$jumlahStok		= 0;
-	while($dataRow	= mysql_fetch_array($dataSql)){
+	while($dataRow	= mysqli_fetch_array($dataSql)){
 		$nomor ++;
 		$jumlahStok	= $jumlahStok + $dataRow['stok_barang'];
 		

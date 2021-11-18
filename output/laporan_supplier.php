@@ -4,8 +4,8 @@
 	include_once "../config/inc.library.php";
 	
 	$tokoSql = "SELECT * FROM ms_toko ";
-	$tokoQry = mysql_query($tokoSql, $koneksidb)  or die ("Query toko salah : ".mysql_error());
-	$tokoRow = mysql_fetch_array($tokoQry);	
+	$tokoQry = mysqli_query($koneksi,$tokoSql)  or die ("Query toko salah : ".mysqli_error());
+	$tokoRow = mysqli_fetch_array($tokoQry);	
 	
 ?>
 
@@ -30,7 +30,7 @@
 		$tglAwal		= $_GET['awal'];
 		$tglAkhir		= $_GET['akhir'];
 											
-		$dataSql = mysql_query("SELECT
+		$dataSql = mysqli_query("SELECT
 								a.kode_supplier,
 								a.nama_supplier,
 								a.jenis_supplier,
@@ -45,7 +45,7 @@
 	
 	$nomor  		= 0;
 	$beli			= 0;
-	while($dataRow	= mysql_fetch_array($dataSql)){
+	while($dataRow	= mysqli_fetch_array($dataSql)){
 		$nomor ++;
 		$beli		= $beli + $dataRow['total_beli'];
 		

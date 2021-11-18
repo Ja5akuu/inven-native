@@ -21,6 +21,8 @@
 		$cmbStatus		= $_POST['cmbStatus'];
 				
 		$sqlCek="SELECT * FROM ms_type WHERE nama_type='$txttype' AND NOT(nama_type='$txtLama')";
+		echo $sqlCek;
+		die;
 		$qryCek=mysqli_query($koneksi,$sqlCek) or die ("Eror Query".mysqli_error()); 
 		if(mysqli_num_rows($qryCek)>=1){
 			$message[] = "Maaf, type service <b> $txttype </b> sudah ada, ganti dengan type lain";
@@ -57,6 +59,7 @@
 		} 
 	}
 $KodeEdit		= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
+
 $sqlShow 		= "SELECT * FROM ms_type WHERE kode_type='$KodeEdit'";
 $qryShow 		= mysqli_query($koneksi,$sqlShow)  or die ("Query ambil data type salah : ".mysqli_error());
 $dataShow 		= mysqli_fetch_array($qryShow);
@@ -75,7 +78,7 @@ $dataStatus		= isset($dataShow['status_type']) ?  $dataShow['status_type'] : $_P
 ?>
 <div class="portlet box blue">
 	<div class="portlet-title">
-		<div class="caption"><span class="caption-subject uppercase bold hidden-xs">Form Suplier</span></div>
+		<div class="caption"><span class="caption-subject uppercase bold hidden-xs">Forms Suplier</span></div>
 		<div class="actions">
 			<a href="<?php $_SERVER['PHP_SELF']; ?>" class="btn blue"><i class="icon-refresh"></i></a>
 			<a href="?page=datatype" class="btn blue"><i class="icon-close"></i></a>

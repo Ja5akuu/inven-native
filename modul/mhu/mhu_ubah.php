@@ -24,7 +24,7 @@
 		
 		
 		if(count($message)==0){			
-			$qrySave=mysql_query("UPDATE ms_barang SET nama_barang='$txtNama', 
+			$qrySave=mysqli_query($koneksi,"UPDATE ms_barang SET nama_barang='$txtNama', 
 														kode_type='$cmbType', 
 														stok_barang='$txtStok',
 														kode_merk='$cmbMerk',
@@ -32,7 +32,7 @@
 														status_barang='$cmbStatus',
 														keterangan_barang='$txtKeterangan'
 													WHERE id_barang='".$_POST['txtKode']."'") 
-			or die ("Gagal query".mysql_error());
+			or die ("Gagal query".mysqli_error());
 			if($qrySave){
 				$_SESSION['pesan'] = 'Data MCU Box berhasil diperbaharui';
 						echo '<script>window.location="?page=dtmcu"</script>';
@@ -53,8 +53,8 @@
 	} 
 	$KodeEdit			= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
 	$sqlShow 			= "SELECT * FROM ms_barang WHERE id_barang='".base64_decode($KodeEdit)."'";
-	$qryShow 			= mysql_query($sqlShow, $koneksidb)  or die ("Query ambil data supplier salah : ".mysql_error());
-	$dataShow 			= mysql_fetch_array($qryShow);
+	$qryShow 			= mysqli_query($koneksi,$sqlShow)  or die ("Query ambil data supplier salah : ".mysqli_error());
+	$dataShow 			= mysqli_fetch_array($qryShow);
 	
 	$dataID				= $dataShow['id_barang'];
 	$dataNama			= isset($dataShow['nama_barang']) ?  $dataShow['nama_barang'] : $_POST['txtNama'];
@@ -91,8 +91,8 @@
 					  <option value=""> </option>
 					  <?php
 						  $dataSql = "SELECT * FROM ms_merk WHERE status_merk='Active' ORDER BY kode_merk";
-						  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-						  while ($dataRow = mysql_fetch_array($dataQry)) {
+						  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+						  while ($dataRow = mysqli_fetch_array($dataQry)) {
 							if ($dataMerk == $dataRow['kode_merk']) {
 								$cek = " selected";
 							} else { $cek=""; }
@@ -110,8 +110,8 @@
 					  <option value=""> </option>
 					  <?php
 						  $dataSql = "SELECT * FROM ms_type WHERE status_type='Active' AND keterangan_type='MHU' ORDER BY kode_type";
-						  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-						  while ($dataRow = mysql_fetch_array($dataQry)) {
+						  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+						  while ($dataRow = mysqli_fetch_array($dataQry)) {
 							if ($dataType == $dataRow['kode_type']) {
 								$cek = " selected";
 							} else { $cek=""; }

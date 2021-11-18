@@ -54,7 +54,7 @@
 	$KodeEdit			= isset($_GET['id']) ?  $_GET['id'] : $_POST['txtKode']; 
 	$sqlShow 			= "SELECT * FROM ms_layanan WHERE kode_layanan='$KodeEdit'";
 	$qryShow 			= mysqli_query($koneksi,$sqlShow)  or die ("Query ambil data supplier salah : ".mysqli_error());
-	$dataShow 			= mysql_fetch_array($qryShow);
+	$dataShow 			= mysqli_fetch_array($qryShow);
 	
 	$dataKode			= $dataShow['kode_layanan'];
 	$dataLama			= $dataShow['nama_layanan'];

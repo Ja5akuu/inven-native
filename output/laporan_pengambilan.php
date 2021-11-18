@@ -6,8 +6,8 @@
 	include_once "../config/inc.library.php";
 	
 	$tokoSql = "SELECT * FROM ms_toko ";
-	$tokoQry = mysql_query($tokoSql, $koneksidb)  or die ("Query toko salah : ".mysql_error());
-	$tokoRow = mysql_fetch_array($tokoQry);	
+	$tokoQry = mysqli_query($koneksi,$tokoSql)  or die ("Query toko salah : ".mysqli_error());
+	$tokoRow = mysqli_fetch_array($tokoQry);	
 	
 ?>
 <div align="center" style="margin-bottom:15px">
@@ -31,13 +31,13 @@
 	$tglAwal		= $_GET['awal'];
 	$tglAkhir		= $_GET['akhir'];
 											
-	$dataSql 		= mysql_query("SELECT * FROM tr_pengambilan a 
+	$dataSql 		= mysqli_query($koneksi,"SELECT * FROM tr_pengambilan a 
 									INNER JOIN tr_pencucian b ON a.kode_pencucian=b.kode_pencucian
 									WHERE date(a.tgl_pengambilan) BETWEEN '$tglAwal' AND '$tglAkhir' 
 									GROUP BY a.kode_pencucian
 									ORDER BY a.tgl_pengambilan DESC");
 	$nomor  				= 0;
-	while($dataRow			= mysql_fetch_array($dataSql)){	
+	while($dataRow			= mysqli_fetch_array($dataSql)){	
 		$nomor ++;
 	?>
 	<tr>

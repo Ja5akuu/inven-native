@@ -60,7 +60,7 @@
                                 <span></span>
                             </label>
                         </td>
-						<td><div align="center"><a href="?page=ubahtype&amp;id=<?php echo $data['nama_kodsup']; ?>"><?php echo $data ['nama_kodsup']; ?></a></div></td>
+						<td><div align="center"><a href="?page=ubahtype&amp;id=<?php echo $data['kode_type']; ?>"><?php echo $data ['kode_type']; ?></a></div></td>
 						<td><?php echo $data ['nama_type']; ?></td>
 						<td><?php echo $data ['nama_pic']; ?></td>
 						<td><?php echo $data ['no_telepon']; ?></td>

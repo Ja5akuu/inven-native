@@ -4,8 +4,8 @@
 		$txtID 		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {
 				
-			$hapus=mysql_query("DELETE FROM ms_barang WHERE id_barang='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+			$hapus=mysqli_query($koneksi,"DELETE FROM ms_barang WHERE id_barang='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 			
 			if($hapus){	
 				$_SESSION['pesan'] = 'Data barang dan item berhasil dihapus';
@@ -51,9 +51,9 @@
 									LEFT JOIN ms_type d ON a.kode_type=d.kode_type
 									WHERE principal_barang='MHU Box'
 									ORDER BY a.id_barang DESC";
-						$dataQry = mysql_query($dataSql, $koneksidb)  or die ("Query petugas salah : ".mysql_error());
+						$dataQry = mysqli_query($koneksi,$dataSql)  or die ("Query petugas salah : ".mysqli_error());
 						$nomor  = 0; 
-						while ($data = mysql_fetch_array($dataQry)) {
+						while ($data = mysqli_fetch_array($dataQry)) {
 						$nomor++;
 						$Kode = $data['id_barang'];
 						if($data ['status_barang']=='Active'){

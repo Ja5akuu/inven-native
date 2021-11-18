@@ -11,12 +11,12 @@
 				LEFT JOIN ms_customer b ON a.kode_customer=b.kode_customer
 				INNER JOIN ms_user c ON a.kode_user=c.kode_user
 				AND a.kode_penjualan='$kodeTransaksi'";
-	$beliQry = mysql_query($beliSql, $koneksidb)  or die ("Query pembelian salah : ".mysql_error());
-	$beliRow = mysql_fetch_array($beliQry);
+	$beliQry = mysqli_query($koneksi,$beliSql)  or die ("Query pembelian salah : ".mysqli_error());
+	$beliRow = mysqli_fetch_array($beliQry);
 	
 	$tokoSql = "SELECT * FROM ms_toko ";
-	$tokoQry = mysql_query($tokoSql, $koneksidb)  or die ("Query toko salah : ".mysql_error());
-	$tokoRow = mysql_fetch_array($tokoQry);
+	$tokoQry = mysqli_query($koneksi,$tokoSql)  or die ("Query toko salah : ".mysqli_error());
+	$tokoRow = mysqli_fetch_array($tokoQry);
 ?>
 <div align="center">
 <h4 style="margin-bottom:0px; font-weight: bold;"><?php echo strtoupper($tokoRow['nama_toko']) ?></h4>
@@ -48,11 +48,11 @@
 						INNER JOIN ms_barang c ON a.kode_barang=c.kode_barang
 						WHERE a.kode_penjualan='$kodeTransaksi'
 						ORDER BY c.kode_barang ASC";
-	$listBarangQry = mysql_query($listBarangSql, $koneksidb)  or die ("Query list barang salah : ".mysql_error());
+	$listBarangQry = mysqli_query($koneksi,$listBarangSql)  or die ("Query list barang salah : ".mysqli_error());
 	$total 	= 0; 
 	$qtyBrg = 0; 
 	$qtyPPN	= 0;
-	while ($listBarangRow = mysql_fetch_array($listBarangQry)) {
+	while ($listBarangRow = mysqli_fetch_array($listBarangQry)) {
 	$subSotal 	= $listBarangRow['jumlah_penjualan'] * intval($listBarangRow['harga_penjualan']);
 	$total 		= $total + $subSotal;
 	$qtyBrg 	= $qtyBrg + $listBarangRow['jumlah_penjualan'];

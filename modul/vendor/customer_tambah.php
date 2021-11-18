@@ -20,10 +20,10 @@
 
 		if(count($message)==0){			
 			$kodeBaru	= buatKode("ms_customer", "CU");
-			$qrySave=mysql_query("INSERT INTO ms_customer SET kode_customer='$kodeBaru', 
+			$qrySave=mysqli_query($koneksi,"INSERT INTO ms_customer SET kode_customer='$kodeBaru', 
 															nama_customer='$txtNama', 
 															telp_customer='$txtTelpon',
-															status_customer='$cmbStatus'") or die ("Gagal query".mysql_error());
+															status_customer='$cmbStatus'") or die ("Gagal query".mysqli_error());
 			if($qrySave){
 				$_SESSION['pesan'] = 'Data customer berhasil ditambahkan';
 				echo '<script>window.location="?page=datacustomer"</script>';

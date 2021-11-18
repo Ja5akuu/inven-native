@@ -5,8 +5,8 @@
 	include_once "../config/inc.library.php";
 	
 	$tokoSql = "SELECT * FROM ms_toko ";
-	$tokoQry = mysql_query($tokoSql, $koneksidb)  or die ("Query toko salah : ".mysql_error());
-	$tokoRow = mysql_fetch_array($tokoQry);	
+	$tokoQry = mysqli_query($koneksi,$tokoSql)  or die ("Query toko salah : ".mysqli_error());
+	$tokoRow = mysqli_fetch_array($tokoQry);	
 	
 ?>
 <div align="center" style="margin-bottom:15px">
@@ -31,7 +31,7 @@
 	$dataPrincipal	= $_GET['princ'];
 	$dataMerk		= $_GET['merk'];
 										
-	$dataSql = mysql_query("SELECT * FROM ms_barang a
+	$dataSql = mysqli_query($koneksi,"SELECT * FROM ms_barang a
 							LEFT JOIN ms_merk c ON a.kode_merk=c.kode_merk
 							LEFT JOIN ms_type d ON a.kode_type=d.kode_type
 							WHERE a.principal_barang LIKE '$dataPrincipal'
@@ -40,7 +40,7 @@
 	
 	$nomor  		= 0;
 	$jumlahStok		= 0;
-	while($dataRow	= mysql_fetch_array($dataSql)){
+	while($dataRow	= mysqli_fetch_array($dataSql)){
 		$nomor ++;
 		$jumlahStok	= $jumlahStok + $dataRow['stok_barang'];
 		

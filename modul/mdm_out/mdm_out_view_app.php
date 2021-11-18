@@ -3,8 +3,8 @@
 	if(isset($_POST['btnApprove'])){
 		$txtID 		= $_POST['btnApprove'];
 				
-		$hapus=mysql_query("UPDATE tr_out SET status_out='Close' WHERE kode_out='$txtID'", $koneksidb) 
-			or die ("Gagal kosongkan tmp".mysql_error());
+		$hapus=mysqli_query($koneksi,"UPDATE tr_out SET status_out='Close' WHERE kode_out='$txtID'") 
+			or die ("Gagal kosongkan tmp".mysqli_error());
 		
 		if($hapus){	
 			
@@ -20,8 +20,8 @@
 				INNER JOIN ms_layanan c ON a.kode_layanan=c.kode_layanan
 				INNER JOIN ms_customer d ON a.kode_customer=d.kode_customer
 				AND a.kode_out='".$kodeTransaksi."'";
-	$beliQry = mysql_query($beliSql, $koneksidb)  or die ("Query pendaftaran salah : ".mysql_error());
-	$beliRow = mysql_fetch_array($beliQry);
+	$beliQry = mysqli_query($koneksi,$beliSql)  or die ("Query pendaftaran salah : ".mysqli_error());
+	$beliRow = mysqli_fetch_array($beliQry);
 ?>
 <div class="portlet box blue">
 	<div class="portlet-title">
@@ -117,10 +117,10 @@
 													LEFT JOIN ms_type d ON b.kode_type=d.kode_type
 												  	WHERE a.kode_out='$kodeTransaksi'
 												  ORDER BY a.id_barang ASC";
-								$listBarangQry = mysql_query($listBarangSql, $koneksidb)  or die ("Query list barang salah : ".mysql_error());
+								$listBarangQry = mysqli_query($koneksi,$listBarangSql)  or die ("Query list barang salah : ".mysqli_error());
 								
 								$nomor	= 0;
-								while ($listBarangRow = mysql_fetch_array($listBarangQry)) {
+								while ($listBarangRow = mysqli_fetch_array($listBarangQry)) {
 								$ID			= $listBarangRow['id'];										
 								$nomor++;
 						?>

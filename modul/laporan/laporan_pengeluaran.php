@@ -59,8 +59,8 @@
 							  <option value="%"> PILIH SEMUA</option>
 							  <?php
 								  $dataSql = "SELECT * FROM ms_customer WHERE status_customer='Active' ORDER BY kode_customer";
-								  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-								  while ($dataRow = mysql_fetch_array($dataQry)) {
+								  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+								  while ($dataRow = mysqli_fetch_array($dataQry)) {
 									if ($dataCustomer == $dataRow['kode_customer']) {
 										$cek = " selected";
 									} else { $cek=""; }
@@ -111,7 +111,7 @@
 						$tglAwal	= InggrisTgl($_POST['txtTglAwal']);
 						$tglAkhir	= InggrisTgl($_POST['txtTglAkhir']);
 															
-						$dataSql 		= mysql_query("SELECT * FROM tr_out_item a
+						$dataSql 		= mysqli_query($koneksi,"SELECT * FROM tr_out_item a
 														INNER JOIN tr_out b ON a.kode_out=b.kode_out
 														LEFT JOIN ms_user c ON b.kode_user=c.kode_user
 														LEFT JOIN ms_customer d ON d.kode_customer=b.kode_customer
@@ -127,7 +127,7 @@
 					}
 					$nomor  		= 0;
 					$jumlah			= 0;
-					while($dataRow	= mysql_fetch_array($dataSql)){	
+					while($dataRow	= mysqli_fetch_array($dataSql)){	
 						$nomor ++;
 						$jumlah 	= $jumlah + $dataRow ['jumlah_out'];
                     ?>

@@ -3,8 +3,8 @@
 
 	if(isset($_POST['btnApp'])){
 		$id_key		= $_POST['txtKode'];
-		$update 	= mysql_query("UPDATE tr_out SET status_out='Open' WHERE kode_out='$id_key'", $koneksidb) 
-						or die ("Gagal kosongkan tmp".mysql_error());
+		$update 	= mysqli_query($koneksi,"UPDATE tr_out SET status_out='Open' WHERE kode_out='$id_key'") 
+						or die ("Gagal kosongkan tmp".mysqli_error());
 		if($update){	
 			
 			$_SESSION['pesan'] = 'Data pengeluaran Part berhasil diperbaharui';
@@ -18,8 +18,8 @@
 				INNER JOIN ms_layanan c ON a.kode_layanan=c.kode_layanan
 				INNER JOIN ms_customer d ON a.kode_customer=d.kode_customer
 				AND a.kode_out='".$kodeTransaksi."'";
-	$beliQry = mysql_query($beliSql, $koneksidb)  or die ("Query pendaftaran salah : ".mysql_error());
-	$beliRow = mysql_fetch_array($beliQry);
+	$beliQry = mysqli_query($koneksi,$beliSql)  or die ("Query pendaftaran salah : ".mysqli_error());
+	$beliRow = mysqli_fetch_array($beliQry);
 	if($beliRow['status_out']=='Draft'){
 		$disabled 	='';
 	}else{
@@ -83,8 +83,8 @@ $dataTeknisi		= isset($_POST['cmbTeknisi']) ? $_POST['cmbTeknisi'] : $beliRow['k
 								<option value=""> </option>
 								<?php
 								  $dataSql = "SELECT * FROM ms_customer WHERE status_customer='Active' ORDER BY kode_customer";
-								  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-								  while ($dataRow = mysql_fetch_array($dataQry)) {
+								  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+								  while ($dataRow = mysqli_fetch_array($dataQry)) {
 									if ($dataCustomer == $dataRow['kode_customer']) {
 										$cek = " selected";
 									} else { $cek=""; }
@@ -107,8 +107,8 @@ $dataTeknisi		= isset($_POST['cmbTeknisi']) ? $_POST['cmbTeknisi'] : $beliRow['k
 								  $dataSql = "SELECT * FROM ms_layanan 
 								  				WHERE status_layanan='Active' 
 								  				ORDER BY kode_layanan";
-								  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-								  while ($dataRow = mysql_fetch_array($dataQry)) {
+								  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+								  while ($dataRow = mysqli_fetch_array($dataQry)) {
 									if ($dataLayanan == $dataRow['kode_layanan']) {
 										$cek = " selected";
 									} else { $cek=""; }
@@ -188,7 +188,7 @@ $dataTeknisi		= isset($_POST['cmbTeknisi']) ? $_POST['cmbTeknisi'] : $beliRow['k
 														LEFT JOIN ms_type d ON b.kode_type=d.kode_type
 													  	WHERE a.kode_out='$kodeTransaksi'
 													  ORDER BY a.id_barang ASC";
-									$listBarangQry = mysql_query($listBarangSql, $koneksidb)  or die ("Query list barang salah : ".mysql_error());
+									$listBarangQry = mysqli_query($koneksi,$listBarangSql)  or die ("Query list barang salah : ".mysqli_error());
 									
 									$nomor	= 0;
 									while ($listBarangRow = mysql_fetch_array($listBarangQry)) {
@@ -234,8 +234,8 @@ $dataTeknisi		= isset($_POST['cmbTeknisi']) ? $_POST['cmbTeknisi'] : $beliRow['k
 									  				WHERE status_user='Active' 
 									  				AND jenis_user='Teknisi'
 									  				ORDER BY kode_user";
-									  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-									  while ($dataRow = mysql_fetch_array($dataQry)) {
+									  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+									  while ($dataRow = mysqli_fetch_array($dataQry)) {
 										if ($dataTeknisi == $dataRow['kode_user']) {
 											$cek = " selected";
 										} else { $cek=""; }

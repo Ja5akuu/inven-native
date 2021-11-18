@@ -10,12 +10,12 @@
 				INNER JOIN tr_pencucian b ON a.kode_pencucian=b.kode_pencucian
 				INNER JOIN ms_user c ON a.kode_user=c.kode_user
 				AND a.kode_pengambilan='$kodeTransaksi'";
-	$beliQry = mysql_query($beliSql, $koneksidb)  or die ("Query pendaftaran salah : ".mysql_error());
-	$beliRow = mysql_fetch_array($beliQry);
+	$beliQry = mysqli_query($koneksi,$beliSql)  or die ("Query pendaftaran salah : ".mysqli_error());
+	$beliRow = mysqli_fetch_array($beliQry);
 	
 	$tokoSql = "SELECT * FROM ms_toko ";
-	$tokoQry = mysql_query($tokoSql, $koneksidb)  or die ("Query toko salah : ".mysql_error());
-	$tokoRow = mysql_fetch_array($tokoQry);
+	$tokoQry = mysqli_query($koneksi,$tokoSql)  or die ("Query toko salah : ".mysqli_error());
+	$tokoRow = mysqli_fetch_array($tokoQry);
 ?>
 <div align="center">
 <h4 style="margin-bottom:0px; font-weight: bold;"><?php echo strtoupper($tokoRow['nama_toko']) ?></h4>
@@ -52,11 +52,11 @@
 							FROM tr_pencucian_item a
 							INNER JOIN ms_jasa b ON a.kode_jasa=b.kode_jasa 
 							WHERE a.kode_pencucian='".$beliRow['kode_pencucian']."'";
-		$listBarangQry = mysql_query($listBarangSql, $koneksidb)  or die ("Query list barang salah : ".mysql_error());
+		$listBarangQry = mysqli_query($koneksi,$listBarangSql)  or die ("Query list barang salah : ".mysqli_error());
 		$total 	= 0; 
 		$qtyBrg = 0; 
 		$itm	= 0;
-		while ($listBarangRow = mysql_fetch_array($listBarangQry)) {
+		while ($listBarangRow = mysqli_fetch_array($listBarangQry)) {
 		$subSotal 	= $listBarangRow['jumlah_pencucian'] * intval($listBarangRow['harga_jasa']);
 		$total 		= $total + $subSotal;
 		$qtyBrg 	= $qtyBrg + $listBarangRow['jumlah_pencucian'];	
@@ -79,9 +79,9 @@
   </tr>
   <?php 
   		$sqlBayar		= "SELECT * FROM tr_pembayaran WHERE kode_pencucian='$kodeTransaksi'";
-  		$qryBayar 		= mysql_query($sqlBayar, $koneksidb);
-  		$byrJumlah		= mysql_num_rows($qryBayar);
-  		$dataBayar 		= mysql_fetch_assoc($qryBayar);
+  		$qryBayar 		= mysqli_query($koneksi,$sqlBayar);
+  		$byrJumlah		= mysqli_num_rows($qryBayar);
+  		$dataBayar 		= mysqli_fetch_assoc($qryBayar);
 
   		if ($byrJumlah>=1) {
   			# code...

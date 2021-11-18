@@ -4,21 +4,21 @@
 		$txtID 		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {
 				
-			$hapus=mysql_query("DELETE FROM tr_out WHERE kode_out='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+			$hapus=mysqli_query($koneksi,"DELETE FROM tr_out WHERE kode_out='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 			
 			if($hapus){	
-				$itmQry			= mysql_query("SELECT * FROM tr_out_item WHERE kode_out='$id_key'", $koneksidb) 
+				$itmQry			= mysqli_query($koneksi,"SELECT * FROM tr_out_item WHERE kode_out='$id_key'") 
 				or die ("Gagal kosongkan tmp".mysql_error());
-				while ($itmRow	= mysql_fetch_assoc($itmQry)) {
-					$update=mysql_query("UPDATE ms_barang SET stok_barang=stok_barang+$itmRow[jumlah_out] 
+				while ($itmRow	= mysqli_fetch_assoc($itmQry)) {
+					$update=mysqli_query("UPDATE ms_barang SET stok_barang=stok_barang+$itmRow[jumlah_out] 
 										WHERE id_barang='".$itmRow['id_barang']."'", $koneksidb) 
-					or die ("Gagal kosongkan tmp".mysql_error());
+					or die ("Gagal kosongkan tmp".mysqli_error());
 				}
 
 
-				$itemHapus=mysql_query("DELETE FROM tr_out_item WHERE kode_out='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+				$itemHapus=mysqli_query("DELETE FROM tr_out_item WHERE kode_out='$id_key'", $koneksidb) 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 				
 				$_SESSION['pesan'] = 'Data pengeluaran modem berhasil dihapus';
 				echo '<script>window.location="?page=dtmhuout"</script>';
@@ -64,9 +64,9 @@
 									LEFT JOIN ms_layanan d ON a.kode_layanan=d.kode_layanan
 									WHERE a.principal='MHU Box' 
 									ORDER BY a.kode_out DESC";
-						$dataQry = mysql_query($dataSql, $koneksidb)  or die ("Query petugas salah : ".mysql_error());
+						$dataQry = mysqli_query($koneksi,$dataSql)  or die ("Query petugas salah : ".mysqli_error());
 						$nomor  = 0; 
-						while ($data = mysql_fetch_array($dataQry)) {
+						while ($data = mysqli_fetch_array($dataQry)) {
 						$nomor++;
 						$Kode 		= $data['kode_out'];
 						

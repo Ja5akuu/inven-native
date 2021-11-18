@@ -4,8 +4,8 @@
 		$txtID 		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {
 				
-			$hapus=mysql_query("UPDATE tr_out SET status_out='Close' WHERE kode_out='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+			$hapus=mysqli_query($koneksi,"UPDATE tr_out SET status_out='Close' WHERE kode_out='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 			
 			if($hapus){	
 				
@@ -52,16 +52,16 @@
 									LEFT JOIN ms_layanan d ON a.kode_layanan=d.kode_layanan
 									LEFT JOIN ms_atm e ON a.id_atm=e.id_atm
 									ORDER BY a.kode_out DESC";
-						$dataQry = mysql_query($dataSql, $koneksidb)  or die ("Query petugas salah : ".mysql_error());
+						$dataQry = mysqli_query($koneksi,$dataSql)  or die ("Query petugas salah : ".mysqli_error());
 						$nomor  = 0; 
-						while ($data = mysql_fetch_array($dataQry)) {
+						while ($data = mysqli_fetch_array($dataQry)) {
 						$nomor++;
 						$Kode 		= $data['kode_out'];
-						$qryItm		= mysql_query("SELECT 
+						$qryItm		= mysqli_query($koneksi,"SELECT 
 														SUM(harga_penjualan*jumlah_penjualan) as total 
 													FROM tr_penjualan_item 
-													WHERE kode_penjualan='$Kode'", $koneksidb);
-						$dataItm	= mysql_fetch_assoc($qryItm);
+													WHERE kode_penjualan='$Kode'");
+						$dataItm	= mysqli_fetch_assoc($qryItm);
 						if($data ['status_out']=='Open'){
 							$dataStatus= "<label class='label label-warning'>Open</label>";
 						}else{

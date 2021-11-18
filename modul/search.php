@@ -43,10 +43,10 @@
 								INNER JOIN ms_type f ON e.kode_type=f.kode_type
 								INNER JOIN ms_user g ON a.kode_teknisi=g.kode_user
 								WHERE e.kode_barang = '$txtCari'";
-					$dataQry = mysql_query($dataSql, $koneksidb)  or die ("Query petugas salah : ".mysql_error());
+					$dataQry = mysqli_query($koneksi,$dataSql)  or die ("Query petugas salah : ".mysqli_error());
 
 					$nomor  = 0; 
-					while ($data = mysql_fetch_array($dataQry)) {
+					while ($data = mysqli_fetch_array($dataQry)) {
 					$nomor++;
 					$Kode = $data['id_barang'];
 					if($data ['status_out']=='Close'){

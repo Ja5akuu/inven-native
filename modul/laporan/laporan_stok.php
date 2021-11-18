@@ -41,8 +41,8 @@
 						  <option value="%"> PILIH SEMUA</option>
 						  <?php
 							  $dataSql = "SELECT * FROM ms_merk WHERE status_merk='Active' ORDER BY kode_merk";
-							  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-							  while ($dataRow = mysql_fetch_array($dataQry)) {
+							  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+							  while ($dataRow = mysqli_fetch_array($dataQry)) {
 								if ($dataMerk == $dataRow['kode_merk']) {
 									$cek = " selected";
 								} else { $cek=""; }
@@ -87,7 +87,7 @@
 						$dataPrincipal	= $_POST['cmbPrincipal'];
 						$dataMerk		= $_POST['cmbMerk'];
 															
-						$dataSql = mysql_query("SELECT * FROM ms_barang a
+						$dataSql = mysqli_query($koneksi,"SELECT * FROM ms_barang a
 												LEFT JOIN ms_merk c ON a.kode_merk=c.kode_merk
 												LEFT JOIN ms_type d ON a.kode_type=d.kode_type
 												WHERE a.principal_barang LIKE '$dataPrincipal'
@@ -96,7 +96,7 @@
 					}
 					$nomor  		= 0;
 					$jumlahStok		= 0;
-					while($dataRow	= mysql_fetch_array($dataSql)){
+					while($dataRow	= mysqli_fetch_array($dataSql)){
 						$nomor ++;
 						$jumlahStok	= $jumlahStok + $dataRow['stok_barang'];
 						

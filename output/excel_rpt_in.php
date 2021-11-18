@@ -39,7 +39,7 @@
 		$tglAwal		= $_GET['awal'];
 		$tglAkhir		= $_GET['akhir'];	
 		$dataPrincipal	= $_GET['princ'];		
-		$dataSql 		= mysql_query("SELECT * FROM tr_in_item a 
+		$dataSql 		= mysqli_query($koneksi,"SELECT * FROM tr_in_item a 
 										INNER JOIN tr_in b ON a.kode_in = b.kode_in
 										INNER JOIN ms_barang c ON a.id_barang = c.id_barang
 										LEFT JOIN ms_merk e ON c.kode_merk = e.kode_merk
@@ -50,7 +50,7 @@
 		$nomor  		= 0;
 		$jumlah			= 0;
 		$subtotal		= 0;
-		while($dataRow	= mysql_fetch_array($dataSql)){	
+		while($dataRow	= mysqli_fetch_array($dataSql)){	
 			$nomor ++;
 			$jumlah 	= $jumlah + $dataRow ['jumlah_in'];
 	?>

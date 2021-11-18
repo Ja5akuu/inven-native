@@ -4,21 +4,21 @@
 		$txtID 		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {
 				
-			$hapus=mysql_query("DELETE FROM tr_in WHERE kode_in='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+			$hapus=mysqli_query($koneksi,"DELETE FROM tr_in WHERE kode_in='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 			
 			if($hapus){	
-				$itmQry			= mysql_query("SELECT * FROM tr_in_item WHERE kode_in='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
-				while ($itmRow	= mysql_fetch_assoc($itmQry)) {
-					$update=mysql_query("UPDATE ms_barang SET stok_barang=stok_barang-$itmRow[jumlah_in] 
-										WHERE id_barang='".$itmRow['id_barang']."'", $koneksidb) 
-					or die ("Gagal kosongkan tmp".mysql_error());
+				$itmQry			= mysqli_query($koneksi,"SELECT * FROM tr_in_item WHERE kode_in='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
+				while ($itmRow	= mysqli_fetch_assoc($itmQry)) {
+					$update=mysqli_query($koneksi,"UPDATE ms_barang SET stok_barang=stok_barang-$itmRow[jumlah_in] 
+										WHERE id_barang='".$itmRow['id_barang']."'") 
+					or die ("Gagal kosongkan tmp".mysqli_error());
 				}
 
 
-				$itemHapus=mysql_query("DELETE FROM tr_in_item WHERE kode_in='$id_key'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+				$itemHapus=mysqli_query($koneksi,"DELETE FROM tr_in_item WHERE kode_in='$id_key'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 				
 				$_SESSION['pesan'] = 'Data penerimaan part MHU berhasil dihapus';
 				echo '<script>window.location="?page=dtpartin"</script>';
@@ -61,9 +61,9 @@
 									INNER JOIN ms_user b ON a.kode_user=b.kode_user
 									WHERE principal='Part'
 									ORDER BY a.kode_in DESC";
-						$dataQry = mysql_query($dataSql, $koneksidb)  or die ("Query petugas salah : ".mysql_error());
+						$dataQry = mysqli_query($koneksi,$dataSql)  or die ("Query petugas salah : ".mysqli_error());
 						$nomor  = 0; 
-						while ($data = mysql_fetch_array($dataQry)) {
+						while ($data = mysqli_fetch_array($dataQry)) {
 						$nomor++;
 						$Kode 		= $data['kode_in'];
 					?>

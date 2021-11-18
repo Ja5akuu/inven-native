@@ -5,8 +5,8 @@
 	include_once "../config/inc.library.php";
 	
 	$tokoSql = "SELECT * FROM ms_toko ";
-	$tokoQry = mysql_query($tokoSql, $koneksidb)  or die ("Query toko salah : ".mysql_error());
-	$tokoRow = mysql_fetch_array($tokoQry);	
+	$tokoQry = mysqli_query($koneksi,$tokoSql)  or die ("Query toko salah : ".mysqli_error());
+	$tokoRow = mysqli_fetch_array($tokoQry);	
 	
 ?>
 <div align="center" style="margin-bottom:15px">
@@ -41,7 +41,7 @@
 		$tglAkhir		= $_GET['akhir'];	
 		$dataCustomer	= $_GET['cus'];	
 		$dataPrincipal	= $_GET['princ'];	
-		$dataSql 		= mysql_query("SELECT * FROM tr_out_item a
+		$dataSql 		= mysqli_query($koneksi,"SELECT * FROM tr_out_item a
 										INNER JOIN tr_out b ON a.kode_out=b.kode_out
 										LEFT JOIN ms_user c ON b.kode_user=c.kode_user
 										LEFT JOIN ms_customer d ON d.kode_customer=b.kode_customer
@@ -55,7 +55,7 @@
 										AND b.principal LIKE '$dataPrincipal'
 										ORDER BY b.tgl_out DESC");
 		$nomor  		= 0;
-		while($dataRow	= mysql_fetch_array($dataSql)){	
+		while($dataRow	= mysqli_fetch_array($dataSql)){	
 			$nomor ++;
 	?>
 	<tr>

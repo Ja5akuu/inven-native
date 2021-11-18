@@ -1,8 +1,8 @@
 <?php
 if($_POST) {
 	if(isset($_POST['btnHapus'])){
-		mysql_query("DELETE FROM tr_out_tmp WHERE id='".$_POST['btnHapus']."' AND kode_user='".$_SESSION['kode_user']."'", $koneksidb) 
-				or die ("Gagal kosongkan tmp".mysql_error());
+		mysqli_query($koneksi,"DELETE FROM tr_out_tmp WHERE id='".$_POST['btnHapus']."' AND kode_user='".$_SESSION['kode_user']."'") 
+				or die ("Gagal kosongkan tmp".mysqli_error());
 	}
 	if(isset($_POST['btnUpdate'])){
 		foreach ($_POST['id'] as $key=>$val) {
@@ -10,11 +10,11 @@ if($_POST) {
 	        $txtJumlahItm     	= $_POST['txtJumlahItm'][$key];
 
 	        $doSql ="UPDATE tr_out_tmp SET jumlah_out='$txtJumlahItm' WHERE id='$txtIDItem'";
-	        $doQry = mysql_query($doSql, $koneksidb) or die ("Gagal Query Tmp".mysql_error());
+	        $doQry = mysqli_query($koneksi,$doSql) or die ("Gagal Query Tmp".mysqli_error());
 	    }
 	}
 	if(isset($_POST['btnBatal'])){
-		mysql_query("DELETE FROM tr_out_tmp WHERE kode_user='".$_SESSION['kode_user']."'", $koneksidb) 
+		mysqli_query($koneksi,"DELETE FROM tr_out_tmp WHERE kode_user='".$_SESSION['kode_user']."'") 
 				or die ("Gagal kosongkan tmp".mysql_error());
 				
 				$_SESSION['pesan'] = 'Pengeluaran berhasil dibatalkan, seluruh item barang dihapus';
@@ -34,14 +34,14 @@ if($_POST) {
 		
 		if(count($message)==0){			
 			$barangSql 		="SELECT * FROM ms_barang WHERE kode_barang='$cmbBarang'";
-			$barangQry 		= mysql_query($barangSql, $koneksidb) or die ("Gagal Query Tmp".mysql_error());
-			$barangRow 		= mysql_fetch_assoc($barangQry);
-			$barangQty 		= mysql_num_rows($barangQry);
+			$barangQry 		= mysqli_query($koneksi,$barangSql) or die ("Gagal Query Tmp".mysqli_error());
+			$barangRow 		= mysqli_fetch_assoc($barangQry);
+			$barangQty 		= mysqli_num_rows($barangQry);
 			if ($barangQty >= 1) {
 				$tmpSql = "INSERT INTO tr_out_tmp SET id_barang='$barangRow[id_barang]',
 													jumlah_out='$txtJumlah', 
 													kode_user='".$_SESSION['kode_user']."'";
-				mysql_query($tmpSql, $koneksidb) or die ("Gagal Query detail barang : ".mysql_error());
+				mysqli_query($koneksi,$tmpSql) or die ("Gagal Query detail barang : ".mysqli_error());
 				$txtKode	= "";
 				$txtJumlah	= "";
 			}
@@ -76,8 +76,8 @@ if($_POST) {
 		$txtAlamat 			= $_POST['txtAlamat'];
 		if (empty($cmbBarang)) {
 			$tmpSql ="SELECT COUNT(*) As qty FROM tr_in_tmp WHERE kode_user='".$_SESSION['kode_user']."'";
-			$tmpQry = mysql_query($tmpSql, $koneksidb) or die ("Gagal Query Tmp".mysql_error());
-			$tmpRow = mysql_fetch_array($tmpQry);
+			$tmpQry = mysqli_query($koneksi,$tmpSql) or die ("Gagal Query Tmp".mysqli_error());
+			$tmpRow = mysqli_fetch_array($tmpQry);
 			if ($tmpRow['qty'] < 1) {
 				$message[] = "Item barang belum ada yang dimasukan, minimal 1 barang & pelayanan.";
 			}
@@ -126,7 +126,7 @@ if($_POST) {
 			}else{
 				$dataStatus='Open';
 			}
-			$qrySave		= mysql_query("INSERT INTO tr_out SET kode_out='$kodeBaru', 
+			$qrySave		= mysqli_query($koneksi,"INSERT INTO tr_out SET kode_out='$kodeBaru', 
 																tgl_out='$txtTglTransaksi',  
 																principal='MHU Box',
 																keterangan_out='$txtRincian',
@@ -145,21 +145,21 @@ if($_POST) {
 																file_image_2='$file_image_2',
 																created_out='".date('Y-m-d H:i:s')."',
 																kode_user='".$_SESSION['kode_user']."'") 
-								  or die ("Gagal query".mysql_error());
+								  or die ("Gagal query".mysqli_error());
 			if(!empty($cmbBarang)){
 				$barangSql 		="SELECT * FROM ms_barang WHERE kode_barang='$cmbBarang'";
-				$barangQry 		= mysql_query($barangSql, $koneksidb) or die ("Gagal Query Tmp".mysql_error());
-				$barangRow 		= mysql_fetch_assoc($barangQry);
-				$barangQty 		= mysql_num_rows($barangQry);
+				$barangQry 		= mysqli_query($koneksi,$barangSql) or die ("Gagal Query Tmp".mysqli_error());
+				$barangRow 		= mysqli_fetch_assoc($barangQry);
+				$barangQty 		= mysqli_num_rows($barangQry);
 				if ($barangQty >= 1) {
 					$save = "INSERT INTO tr_out_item SET kode_out='$kodeBaru', 
 														id_barang='$barangRow[id_barang]', 
 														jumlah_out='$txtJumlah'";
-					mysql_query($save, $koneksidb) or die ("Gagal Query Simpan detail barang".mysql_error());
+					mysqli_query($koneksi,$save) or die ("Gagal Query Simpan detail barang".mysqli_error());
 					if($save){
 						$stock = "UPDATE ms_barang SET stok_barang=stok_barang - $txtJumlah
 												WHERE id_barang='$barangRow[id_barang]'";
-						mysql_query($stock, $koneksidb) or die ("Gagal Query Edit Stok".mysql_error());
+						mysqli_query($koneksi,$stock) or die ("Gagal Query Edit Stok".mysqli_error());
 					}
 				}
 				else {
@@ -168,20 +168,20 @@ if($_POST) {
 			}	
 			if($qrySave){
 				$tmpSql ="SELECT * FROM tr_out_tmp WHERE kode_user='".$_SESSION['kode_user']."'";
-				$tmpQry = mysql_query($tmpSql, $koneksidb) or die ("Gagal Query Tmp".mysql_error());
-				while ($tmpRow = mysql_fetch_array($tmpQry)) {
+				$tmpQry = mysqli_query($koneksi,$tmpSql) or die ("Gagal Query Tmp".mysqli_error());
+				while ($tmpRow = mysqli_fetch_array($tmpQry)) {
 					$barangSql = "INSERT INTO tr_out_item SET kode_out='$kodeBaru', 
 															id_barang='$tmpRow[id_barang]', 
 															jumlah_out='$tmpRow[jumlah_out]'";
-					mysql_query($barangSql, $koneksidb) or die ("Gagal Query Simpan detail barang".mysql_error());
+					mysqli_query($koneksi,$barangSql) or die ("Gagal Query Simpan detail barang".mysqli_error());
 					$barangSql = "UPDATE ms_barang SET stok_barang=stok_barang - $tmpRow[jumlah_out]
 											WHERE id_barang='$tmpRow[id_barang]'";
-					mysql_query($barangSql, $koneksidb) or die ("Gagal Query Edit Stok".mysql_error());
+					mysqli_query($koneksi,$barangSql) or die ("Gagal Query Edit Stok".mysqli_error());
 
 					
 				}
-				mysql_query("DELETE FROM tr_out_tmp WHERE kode_user='".$_SESSION['kode_user']."'", $koneksidb) 
-						or die ("Gagal kosongkan tmp".mysql_error());
+				mysqli_query($koneksi,"DELETE FROM tr_out_tmp WHERE kode_user='".$_SESSION['kode_user']."'", $koneksidb) 
+						or die ("Gagal kosongkan tmp".mysqli_error());
 					
 				$_SESSION['pesan'] = 'Pengeluaran barang dengan nomor transaksi '.$kodeBaru.' berhasil dibuat';
 				echo '<script>window.location="?page=dtlmhuout&id='.base64_encode($kodeBaru).'"</script>';
@@ -265,8 +265,8 @@ function submitform() {
 									<option value=""> </option>
 									<?php
 									  $dataSql = "SELECT * FROM ms_customer WHERE status_customer='Active' ORDER BY kode_customer";
-									  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-									  while ($dataRow = mysql_fetch_array($dataQry)) {
+									  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+									  while ($dataRow = mysqli_fetch_array($dataQry)) {
 										if ($dataCustomer == $dataRow['kode_customer']) {
 											$cek = " selected";
 										} else { $cek=""; }
@@ -288,8 +288,8 @@ function submitform() {
 									  $dataSql = "SELECT * FROM ms_layanan 
 									  				WHERE status_layanan='Active' 
 									  				ORDER BY kode_layanan";
-									  $dataQry = mysql_query($dataSql, $koneksidb) or die ("Gagal Query".mysql_error());
-									  while ($dataRow = mysql_fetch_array($dataQry)) {
+									  $dataQry = mysqli_query($koneksi,$dataSql) or die ("Gagal Query".mysqli_error());
+									  while ($dataRow = mysqli_fetch_array($dataQry)) {
 										if ($dataLayanan == $dataRow['kode_layanan']) {
 											$cek = " selected";
 										} else { $cek=""; }
@@ -393,10 +393,10 @@ function submitform() {
 											LEFT JOIN ms_type d ON b.kode_type=d.kode_type
 											WHERE a.kode_user='".$_SESSION['kode_user']."'
 											ORDER BY a.id DESC";
-								$tmpQry = mysql_query($tmpSql, $koneksidb) or die ("Gagal Query Tmp".mysql_error());
+								$tmpQry = mysqli_query($koneksi,$tmpSql) or die ("Gagal Query Tmp".mysqli_error());
 								$qtyBrg = 0; 
 								$nomor	= 0;
-								while($tmpRow = mysql_fetch_array($tmpQry)) {
+								while($tmpRow = mysqli_fetch_array($tmpQry)) {
 									$ID			= $tmpRow['id'];
 									$qtyBrg 	= $qtyBrg + $tmpRow['jumlah_out'];											
 									$nomor++;
@@ -477,13 +477,13 @@ function submitform() {
 		            <tbody>
 		                <?php
 		                //Data mentah yang ditampilkan ke tabel    
-		                $query = mysql_query("SELECT * FROM ms_barang a
+		                $query = mysqli_query($koneksi,"SELECT * FROM ms_barang a
 												LEFT JOIN ms_merk c ON a.kode_merk=c.kode_merk
 												LEFT JOIN ms_type d ON a.kode_type=d.kode_type
 												WHERE status_barang='Active'
 												AND principal_barang='MHU Box'
 												ORDER BY a.id_barang DESC");
-		                while ($data = mysql_fetch_array($query)) {
+		                while ($data = mysqli_fetch_array($query)) {
 		                    ?>
 		                    <tr class="pilihBarang" data-dismiss="modal" aria-hidden="true" 
 								data-kode="<?php echo $data['kode_barang']; ?>"

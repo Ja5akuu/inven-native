@@ -52,7 +52,7 @@
 						<th width="20%">NAMA PROEJCT</th>
 						<th width="20%">PIC PROJECT</th>
 					  	<th width="15%">PIC LAPANGAN</th>
-                        <th width="10%"><div align="center">STATUS</div></th>
+                        <th width="5%"><div align="center">STATUS</div></th>
                       	<th width="10%"><div align="center">LIHAT</div></th>
                     </tr>
 				</thead>
@@ -91,7 +91,16 @@
                         <td><?php echo $data['nama_user']; ?></td>
                         <td><?php echo $data['nama_layanan']; ?></td>
 						<td><div align="center"><?php echo $dataStatus; ?></div></td>
-						<td><div align="center"><a href="?page=dtlmdmout&amp;id=<?php echo base64_encode($Kode); ?>" class="btn btn-xs green"><i class="icon-book-open"></i></a></div></td>
+						<td>
+							<div align="center">
+								<a href="?page=dtlmdmout&amp;id=<?php echo base64_encode($Kode); ?>" class="btn btn-xs green">
+									<i class="icon-book-open"></i>
+								</a>
+								<a href="#" onClick="pdf()" class="btn btn-xs red">
+									<i class="fa fa-print"></i>
+								</a>
+							</div>
+						</td>
                     </tr>
                     <?php } ?>
 				</tbody>
@@ -100,3 +109,10 @@
 		</div>
 	</div>
 </form>
+<script type="text/javascript"> 
+    function pdf()	 
+    { 
+    	 // win=window.open('./output/print_suratjalan.php?princ=<?php echo $Kode; ?>&merk=<?php echo $dataMerk; ?>','win','width=1500, height=600, menubar=0, 
+    win=window.open('./output/print_suratjalan.php?princ=<?php echo $Kode; ?>','win','width=1500, height=600, menubar=0, scrollbars=1, resizable=0, status=0'); 
+    } 
+</script>

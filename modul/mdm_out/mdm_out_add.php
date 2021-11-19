@@ -88,7 +88,7 @@ if($_POST) {
 		if(count($message)==0){			
 			$kodeBaru		= kodeUnik("tr_out", "kode_out", "".date('ymd')."", "10","tgl_out");
 			// UPLOAD CSR
-			if (! empty($_FILES['txtCSR']['tmp_name'])) {
+			if (!empty($_FILES['txtCSR']['tmp_name'])) {
 				$file_csr = $_FILES['txtCSR']['name'];
 				$file_csr = stripslashes($file_csr);
 				$file_csr = str_replace("'","",$file_csr);
@@ -100,7 +100,7 @@ if($_POST) {
 				$file_csr = "";
 			}
 			// UPLOAD IMAGE 1
-			if (! empty($_FILES['txtImage1']['tmp_name'])) {
+			if (!empty($_FILES['txtImage1']['tmp_name'])) {
 				$file_image_1 = $_FILES['txtImage1']['name'];
 				$file_image_1 = stripslashes($file_image_1);
 				$file_image_1 = str_replace("'","",$file_image_1);

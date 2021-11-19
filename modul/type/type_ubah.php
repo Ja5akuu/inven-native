@@ -20,14 +20,7 @@
 		$txtKeterangan	= $_POST['txtKeterangan'];
 		$cmbStatus		= $_POST['cmbStatus'];
 				
-		$sqlCek="SELECT * FROM ms_type WHERE nama_type='$txttype' AND NOT(nama_type='$txtLama')";
-		echo $sqlCek;
-		die;
-		$qryCek=mysqli_query($koneksi,$sqlCek) or die ("Eror Query".mysqli_error()); 
-		if(mysqli_num_rows($qryCek)>=1){
-			$message[] = "Maaf, type service <b> $txttype </b> sudah ada, ganti dengan type lain";
-		}
-				
+		
 		if(count($message)==0){	
 			if (! empty($_FILES['txtCSR']['tmp_name'])) {
 				$file_csr = $_FILES['txtCSR']['name'];
@@ -86,6 +79,7 @@ $datatelepon	= isset($dataShow['no_telepon']) ?  $dataShow['no_telepon'] : $_POS
 $datanote		= isset($dataShow['sup_note']) ?  $dataShow['sup_note'] : $_POST['txtnote'];
 $dataKeterangan	= isset($dataShow['keterangan_type']) ?  $dataShow['keterangan_type'] : $_POST['txtKeterangan'];
 $dataStatus		= isset($dataShow['status_type']) ?  $dataShow['status_type'] : $_POST['cmbStatus'];
+$datafile_doc	= isset($dataShow['file_doc']) ?  $dataShow['file_doc'] : $_POST['txtCSR'];
 	
 ?>
 <div class="portlet box blue">
@@ -97,7 +91,7 @@ $dataStatus		= isset($dataShow['status_type']) ?  $dataShow['status_type'] : $_P
 		</div>
 	</div>
 	<div class="portlet-body form">
-		<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="frmadd" class="form-horizontal form-bordered">
+		<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="frmadd" class="form-horizontal form-bordered" enctype="multipart/form-data">
 			<div class="form-body">
 				<div class="form-group">
 					<label class="col-md-2 control-label">Kode :</label>

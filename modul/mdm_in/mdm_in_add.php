@@ -1,4 +1,17 @@
 <?php
+$qry	= mysqli_query($koneksi,"SELECT MAX(kode_in) as kodeTerbesar FROM tr_in ");
+$row	= mysqli_fetch_array($qry); 
+$kodeBarang = $row['kodeTerbesar'];
+
+
+$urutan = (int) substr($kodeBarang, 5);
+
+
+$urutan++;
+
+$huruf = date('ymd');
+$kodeBarang = $huruf . sprintf("%03s", $urutan);
+
 if($_POST) {
 	if(isset($_POST['btnHapus'])){
 		mysqli_query($koneksi,"DELETE FROM tr_in_tmp WHERE id='".$_POST['btnHapus']."' AND kode_user='".$_SESSION['kode_user']."'") 
@@ -38,10 +51,11 @@ if($_POST) {
 			$barangRow 		= mysqli_fetch_assoc($barangQry);
 			$barangQty 		= mysqli_num_rows($barangQry);
 			if ($barangQty >= 1) {
+											
 				$tmpSql = "INSERT INTO tr_in_tmp SET id_barang='$barangRow[id_barang]',
 													jumlah_in='$txtJumlah', 
 													kode_user='".$_SESSION['kode_user']."'";
-				mysqli_query($koneksi,$tmpSqli) or die ("Gagal Query detail barang : ".mysqli_error());
+				mysqli_query($koneksi,$tmpSql) or die ("Gagal Query detail barang : ".mysqli_error());
 				$txtKode	= "";
 				$txtJumlah	= "";
 			}
@@ -59,6 +73,7 @@ if($_POST) {
 		}
 		
 		$txtCatatan		= $_POST['txtCatatan'];
+		$kodeBaru		= $_POST['txtNomor'];
 		$txtTanggal		= InggrisTgl($_POST['txtTanggal']);
 		$cmbBarang		= $_POST['cmbBarang'];
 		$txtJumlah		= $_POST['txtJumlah'];
@@ -72,8 +87,8 @@ if($_POST) {
 		}
 				
 		if(count($message)==0){			
-			$kodeBaru		= kodeUnik("tr_in", "kode_in", "".date('ymd')."", "10","tgl_in");
-			$qrySave		= mysqli_query("INSERT INTO tr_in SET kode_in='$kodeBaru', 
+			// $kodeBaru		= kodeUnik("tr_in", "kode_in", "".date('ymd')."", "10","tgl_in");
+			$qrySave		= mysqli_query($koneksi,"INSERT INTO tr_in SET kode_in='$kodeBaru', 
 																tgl_in='$txtTanggal',  
 																principal='Purchasing',
 																keterangan_in='$txtCatatan',
@@ -137,7 +152,7 @@ if($_POST) {
 		echo "</div>"; 
 	}
 } 
-$nomorTransaksi = kodeUnik("tr_in", "kode_in", "".date('ymd')."", "10","tgl_in");
+$nomorTransaksi = $kodeBarang ;
 $tglTransaksi 	= isset($_POST['cmbTanggal']) ? $_POST['cmbTanggal'] : date('d-m-Y');
 $dataCatatan	= isset($_POST['txtCatatan']) ? $_POST['txtCatatan'] : '';
 ?>
@@ -159,7 +174,7 @@ $dataCatatan	= isset($_POST['txtCatatan']) ? $_POST['txtCatatan'] : '';
 							<label class="control-label">No. Penerimaan :</label>
 							<div class="input-icon left">
 								<i class="fa fa-barcode"></i>
-								<input class="form-control" type="text" name="txtNomor" value="<?php echo $nomorTransaksi; ?>" disabled="disabled"/>
+								<input class="form-control" type="text" name="txtNomor" value="<?php echo $nomorTransaksi; ?>" readonly/>
 							</div>
 						</div>
 					</div>
@@ -303,11 +318,11 @@ $dataCatatan	= isset($_POST['txtCatatan']) ? $_POST['txtCatatan'] : '';
 		                    <tr class="pilihBarang" data-dismiss="modal" aria-hidden="true" 
 								data-kode="<?php echo $data['kode_barang']; ?>"
 								data-nama="<?php echo $data['nama_barang']; ?>"
-								data-type="<?php echo $data['nama_type']; ?>">
+								data-type="<?php echo $data['kategori_barang']; ?>">
 		                        <td><div align="center"><?php echo $data['kode_barang']; ?></div></td>
 		                        <td><?php echo $data['nama_barang']; ?></td>
 		                        <td><?php echo $data['nama_merk']; ?></td>
-		                        <td><?php echo $data['nama_type']; ?></td>
+		                        <td><?php echo $data['kategori_barang']; ?></td>
 		                        <td><div align="center"><?php echo $data['stok_barang']; ?></div></td>
 		                    </tr>
 		                    <?php

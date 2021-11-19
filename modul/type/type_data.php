@@ -41,6 +41,7 @@
 						<th width="20%">No Telepon</th>
 						<th width="400%">Alamat</th>
 						<th width="30%">Bidang Usaha</th>
+						<th width="30%">File</th>
 			  	  	  	<th width="11%"><div align="center">STATUS</div></th>
                     </tr>
 				</thead>
@@ -66,6 +67,7 @@
 						<td><?php echo $data ['no_telepon']; ?></td>
 						<td><?php echo $data ['alamat_sup']; ?></td>
 						<td><?php echo $data ['sup_note']; ?></td>
+						<td><a href="./photo/<?php echo $data ['file_doc']; ?>" target="_BLANK"><?php echo $data ['file_doc']; ?></a></td>
                         <td>
 						  <div align="center">
 						    <?php 

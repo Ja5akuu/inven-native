@@ -42,7 +42,7 @@ if(isset($_POST['btnSave'])){
 
 	if(count($message)==0){			
 		$NewID	= $_POST['kode'];
-		if (! empty($_FILES['txtCSR']['tmp_name'])) {
+		if (!empty($_FILES['txtCSR']['tmp_name'])) {
 			$file_csr = $_FILES['txtCSR']['name'];
 			$file_csr = stripslashes($file_csr);
 			$file_csr = str_replace("'","",$file_csr);
@@ -104,7 +104,7 @@ $dataStatus		= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 		</div>
 	</div>
 	<div class="portlet-body form">
-		<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="frmadd" class="form-horizontal form-bordered">
+		<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post" name="frmadd" class="form-horizontal form-bordered" enctype="multipart/form-data">
 			<div class="form-body">
 				<div class="form-group">
 					<label class="col-md-2 control-label">Kode Data:</label>
@@ -168,7 +168,7 @@ $dataStatus		= isset($_POST['cmbStatus']) ? $_POST['cmbStatus'] : '';
 				<div class="form-group">
 					<label class="col-md-2 control-label">File Doc :</label>
 					<div class="col-md-5">
-					<input type="file" class="form-control" name="txtCSR" value="<?php echo $dataCSR ?>" />
+					<input type="file" class="form-control" name="txtCSR" value="<?php echo $datafile_doc ?>" />
 	                    </div>
 				</div>	
 				<div class="form-group">

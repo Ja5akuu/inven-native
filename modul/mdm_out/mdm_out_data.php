@@ -96,7 +96,7 @@
 								<a href="?page=dtlmdmout&amp;id=<?php echo base64_encode($Kode); ?>" class="btn btn-xs green">
 									<i class="icon-book-open"></i>
 								</a>
-								<a href="#" onClick="pdf()" class="btn btn-xs red">
+								<a href="#" onClick="pdf(<?php echo $Kode; ?>)" class="btn btn-xs red">
 									<i class="fa fa-print"></i>
 								</a>
 							</div>
@@ -110,9 +110,11 @@
 	</div>
 </form>
 <script type="text/javascript"> 
-    function pdf()	 
+    function pdf(kode)	 
     { 
+    	 var currentRow=$(this).closest("tr");
+		 var col1=currentRow.find("td:eq(0)").html();
     	 // win=window.open('./output/print_suratjalan.php?princ=<?php echo $Kode; ?>&merk=<?php echo $dataMerk; ?>','win','width=1500, height=600, menubar=0, 
-    win=window.open('./output/print_suratjalan.php?princ=<?php echo $Kode; ?>','win','width=1500, height=600, menubar=0, scrollbars=1, resizable=0, status=0'); 
+    win=window.open('./output/print_suratjalan.php?Kode='+ kode +'','win','width=1500, height=600, menubar=0, scrollbars=1, resizable=0, status=0'); 
     } 
 </script>

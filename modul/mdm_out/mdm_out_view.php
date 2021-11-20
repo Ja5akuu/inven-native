@@ -104,9 +104,8 @@
 				  	  	  	  	<th width="5%"><div align="center">NO</div></th>
 						  	  	<th width="10%"><div align="center">KODE</div></th>
 						  	  	<th width="40%"><div align="left">NAMA BARANG </div></th>
-						  	  	<th width="20%"><div align="left">MERK </div></th>
-						  	  	<th width="20%"><div align="left">MERK </div></th>
 								<th width="5%"><div align="center">JUMLAH</div></th>
+								<th width="5%"><div align="center">SATUAN</div></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -128,9 +127,8 @@
 								<td><div align="center"><?php echo $nomor; ?></div></td>
 								<td><div align="center"><?php echo $listBarangRow['kode_barang']; ?></div></td>
 								<td><div align="left"><?php echo $listBarangRow['nama_barang']; ?></div></td>
-								<td><div align="left"><?php echo $listBarangRow['nama_merk']; ?></div></td>
-								<td><div align="left"><?php echo $listBarangRow['nama_type']; ?></div></td>
 								<td><div align="center"><?php echo format_angka($listBarangRow['jumlah_out']); ?></div></td>
+								<td><div align="center"><?php echo $listBarangRow['kategori_barang']; ?></div></td>
 							</tr>
 						<?php } ?>
 						</tbody>

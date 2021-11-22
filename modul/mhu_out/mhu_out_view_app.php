@@ -2,9 +2,9 @@
 
 	if(isset($_POST['btnApprove'])){
 		$txtID 		= $_POST['btnApprove'];
-		$cmbStatus	= $_POST['cmbStatus'];
+		//$cmbStatus	= $_POST['cmbStatus'];
 				
-		$hapus=mysqli_query($koneksi,"UPDATE tr_out SET status_out='$cmbStatus' 
+		$hapus=mysqli_query($koneksi,"UPDATE tr_out SET status_out='Close' 
 							WHERE kode_out='$txtID'") 
 			or die ("Gagal kosongkan tmp".mysqli_error());
 		

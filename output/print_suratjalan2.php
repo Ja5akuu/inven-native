@@ -35,11 +35,15 @@
 	</tr>
 	<tr>
 		<td>Pengirim :</td>
-		<td><?php echo $tokoRow['lokasi_pengerjaan'] ?></td>
+		<td><?php echo $tokoRow['nama_layanan'] ?></td>
 	</tr>
 	<tr>
 		<td>PIC :</td>
 		<td><?php echo $tokoRow['nama_layanan'] ?></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><?php echo $tokoRow['lokasi_pengerjaan'] ?></td>
 	</tr>
 	<tr>
 		<td>Telepon :</td>

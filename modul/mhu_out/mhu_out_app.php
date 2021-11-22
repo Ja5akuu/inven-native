@@ -4,7 +4,7 @@
 		$txtID 		= $_POST['txtID'];
 		foreach ($txtID as $id_key) {		
 			$hapus=mysqli_query($koneksi,"UPDATE tr_out SET status_out='Close' WHERE kode_out='$id_key'") 
-				or die ("Gagal kosongkan tmp".mysqli_error());
+				or die ("Gagal kosongkasn tmp".mysqli_error());
 			
 			if($hapus){	
 				
@@ -17,7 +17,7 @@
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="POST" class="form-horizontal">
 	<div class="portlet box blue">
 		<div class="portlet-title">
-		<div class="caption"><span class="caption-subject uppercase bold hidden-xs">Data Approval Pengeluaran MHU Box</span></div>
+		<div class="caption"><span class="caption-subject uppercase bold hidden-xs">DETAIL APPROVAL PENGELUARAN BARANG MHU BOX</span></div>
 			<div class="actions">	
 				<button class="btn blue" name="btnApprove" type="submit" onclick="return confirm('Anda yakin ingin menyetujui data penting ini !!')"><i class="icon-check"></i></button>
 				<a href="<?php $_SERVER['PHP_SELF']; ?>" class="btn blue"><i class="icon-refresh"></i></a>

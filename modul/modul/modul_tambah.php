@@ -23,6 +23,7 @@
 													submenu_menu='$cmbMenu', 
 													submenu_urutan='$txtUrutan',
 													submenu_dibuat='".date('Y-m-d')."'";
+													
 			$qrySave	= mysqli_query($koneksi,$sqlSave) or die ("gagal insert". mysqli_error());
 			if($qrySave){
 				$_SESSION['pesan'] = 'Data modul berhasil ditambahkan';

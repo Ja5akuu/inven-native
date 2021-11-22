@@ -56,6 +56,8 @@
 		elseif($pg=="addmdmin"){ include"modul/mdm_in/mdm_in_add.php"; }
 		elseif($pg=="dtmdmin"){ include"modul/mdm_in/mdm_in_data.php"; }
 		elseif($pg=="dtlmdmin"){ include"modul/mdm_in/mdm_in_view.php"; }
+		elseif($pg=="dtappmdmin"){ include"modul/mdm_in/mdm_in_app.php"; }
+		elseif($pg=="dtlappmdmin"){ include"modul/mdm_in/mdm_in_view_app.php"; }
 	// DATA MODEM OUT
 		elseif($pg=="addmdmout"){ include"modul/mdm_out/mdm_out_add.php"; }
 		elseif($pg=="dtmdmout"){ include"modul/mdm_out/mdm_out_data.php"; }
@@ -66,6 +68,8 @@
 		elseif($pg=="addmhuin"){ include"modul/mhu_in/mhu_in_add.php"; }
 		elseif($pg=="dtmhuin"){ include"modul/mhu_in/mhu_in_data.php"; }
 		elseif($pg=="dtlmhuin"){ include"modul/mhu_in/mhu_in_view.php"; }
+		elseif($pg=="dtappmhuin"){ include"modul/mhu_in/mhu_in_app.php"; }
+		elseif($pg=="dtlappmhuin"){ include"modul/mhu_in/mhu_in_view_app.php"; }
 	// DATA MHU OUT
 		elseif($pg=="addmhuout"){ include"modul/mhu_out/mhu_out_add.php"; }
 		elseif($pg=="dtmhuout"){ include"modul/mhu_out/mhu_out_data.php"; }
@@ -76,6 +80,8 @@
 		elseif($pg=="addpartin"){ include"modul/part_in/part_in_add.php"; }
 		elseif($pg=="dtpartin"){ include"modul/part_in/part_in_data.php"; }
 		elseif($pg=="dtlpartin"){ include"modul/part_in/part_in_view.php"; }
+		elseif($pg=="dtapppartin"){ include"modul/part_in/part_in_app.php"; }
+		elseif($pg=="dtlapppartin"){ include"modul/part_in/part_in_view_app.php"; }
 	// DATA PART OUT
 		elseif($pg=="addpartout"){ include"modul/part_out/part_out_add.php"; }
 		elseif($pg=="dtpartout"){ include"modul/part_out/part_out_data.php"; }

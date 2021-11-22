@@ -51,7 +51,7 @@
                         <th width="15%"><div align="center">TGL. PENGELUARAN</div></th>
 						<th width="20%">NAMA PELANGGAN</th>
 					  	<th width="15%">LAYANAN</th>
-						<th width="20%">NAMA PENGIRIM</th>
+						<th width="10%">NAMA PENGIRIM</th>
                         <th width="10%"><div align="center">STATUS</div></th>
                       	<th width="10%"><div align="center">LIHAT</div></th>
                     </tr>
@@ -91,7 +91,16 @@
                         <td><?php echo $data['nama_layanan']; ?></td>
                         <td><?php echo $data['nama_pengirim']; ?></td>
 						<td><div align="center"><?php echo $dataStatus; ?></div></td>
-						<td><div align="center"><a href="?page=dtlmhuout&amp;id=<?php echo base64_encode($Kode); ?>" class="btn btn-xs green"><i class="icon-book-open"></i></a></div></td>
+						<td>
+							<div align="center">
+								<!-- <a href="?page=dtlmhuout&amp;id=<?php echo base64_encode($Kode); ?>" class="btn btn-xs green"><i class="icon-book-open"></i></a> -->
+								<a href="?page=dtlmhuout&amp;id=<?php echo base64_encode($Kode); ?>" class="btn btn-xs green">
+									<i class="icon-book-open"></i>
+								</a>
+								<a href="#" onClick="pdf(<?php echo $Kode; ?>)" class="btn btn-xs red">
+									<i class="fa fa-print"></i>
+								</a>
+							</div></td>
                     </tr>
                     <?php } ?>
 				</tbody>
@@ -100,3 +109,12 @@
 		</div>
 	</div>
 </form>
+<script type="text/javascript"> 
+    function pdf(kode)	 
+    { 
+    	 var currentRow=$(this).closest("tr");
+		 var col1=currentRow.find("td:eq(0)").html();
+    	 // win=window.open('./output/print_suratjalan.php?princ=<?php echo $Kode; ?>&merk=<?php echo $dataMerk; ?>','win','width=1500, height=600, menubar=0, 
+    win=window.open('./output/print_suratjalan1.php?Kode='+ kode +'','win','width=1500, height=600, menubar=0, scrollbars=1, resizable=0, status=0'); 
+    } 
+</script>

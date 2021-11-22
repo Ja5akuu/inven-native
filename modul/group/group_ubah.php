@@ -22,17 +22,17 @@ if(isset($_POST['btnSave'])){
 		$delete=mysqli_query($koneksi,"DELETE FROM sys_akses WHERE akses_group='$txtKode'") 
 								or die ("Gagal kosongkan tmp".mysql_error());		
 		foreach ($txtModul as $id_key) {
-			$simpanModul=mysqli_query("INSERT INTO sys_akses SET akses_group='$txtKode',
+			$simpanModul=mysqli_query($koneksi,"INSERT INTO sys_akses SET akses_group='$txtKode',
 																akses_submenu='$id_key',
-																akses_dibuat='".date('Y-m-d')."'", $koneksi) 
+																akses_dibuat='".date('Y-m-d')."'") 
 				or die ("Gagal kosongkan tmp".mysqli_error());
 				
 		}
 		
-		$qrySave		= mysqli_query("UPDATE sys_group SET group_nama='$txtNama', 
+		$qrySave		= mysqli_query($koneksi,"UPDATE sys_group SET group_nama='$txtNama', 
 															group_keterangan='$txtKeterangan', 
 															group_status='$cmbStatus'
-														WHERE group_id='".$_POST['txtKode']."'", $koneksi) 
+														WHERE group_id='".$_POST['txtKode']."'") 
 							  or die ("Gagal query".mysqli_error());
 		if($qrySave){						
 			$_SESSION['pesan'] = 'Data group akses berhasil diperbaharui';

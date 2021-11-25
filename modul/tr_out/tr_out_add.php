@@ -1,4 +1,18 @@
 <?php
+$qry	= mysqli_query($koneksi,"SELECT MAX(kode_out) as kodeTerbesar FROM tr_out");
+$row	= mysqli_fetch_array($qry); 
+$kodeBarang = $row['kodeTerbesar'];
+
+
+$urutan = (int) substr($kodeBarang, 7);
+
+
+$urutan++;
+
+$huruf = date('ymd');
+$kodeBarang = $huruf . sprintf("%03s", $urutan);
+
+
 if($_POST) {
 	if(isset($_POST['btnHapus'])){
 		mysqli_query($koneksi,"DELETE FROM tr_out_tmp WHERE id='".$_POST['btnHapus']."' AND kode_user='".$_SESSION['kode_user']."'") 
@@ -95,7 +109,7 @@ if($_POST) {
 		$txtKembali		= InggrisTgl($_POST['txtKembali']);
 				
 		if(count($message)==0){			
-			$kodeBaru		= kodeUnik("tr_out", "kode_out", "".date('ymd')."", "10","tgl_out");
+			$kodeBaru		= $_POST['kode'];
 			$qrySave		= mysqli_query($koneksi,"INSERT INTO tr_out SET kode_out='$kodeBaru', 
 																tgl_out='$txtTanggal',  
 																keterangan_out='$txtCatatan',
@@ -145,7 +159,7 @@ if($_POST) {
 		echo "</div>"; 
 	}
 } 
-$nomorTransaksi = kodeUnik("tr_out", "kode_out", "".date('ymd')."", "10","tgl_out");
+$nomorTransaksi = $kodeBarang;
 $dataTanggal 	= isset($_POST['txtTanggal']) ? $_POST['txtTanggal'] : date('d-m-Y');
 $dataCatatan	= isset($_POST['txtCatatan']) ? $_POST['txtCatatan'] : '';
 $dataCustomer	= isset($_POST['cmbCustomer']) ? $_POST['cmbCustomer'] : '';
@@ -170,7 +184,7 @@ $dataTeknisi	= isset($_POST['cmbTeknisi']) ? $_POST['cmbTeknisi'] : $_SESSION['k
 				<div class="col-md-3">
 					<div class="form-group">
 						<label class="control-label">No. Pengeluaran :</label>
-						<input class="form-control" type="text" name="txtNomor" value="<?php echo $nomorTransaksi; ?>" disabled="disabled"/>
+						<input class="form-control" type="text" name="txtNomor" value="<?php echo $nomorTransaksi; ?>" readonly name="kode"/>
 					</div>
 					<div class="form-group">
 						<label class="control-label">Tgl. Pengeluaran :</label>

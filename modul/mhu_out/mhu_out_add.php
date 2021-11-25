@@ -1,4 +1,17 @@
 <?php
+$qry	= mysqli_query($koneksi,"SELECT MAX(kode_out) as kodeTerbesar FROM tr_out");
+$row	= mysqli_fetch_array($qry); 
+$kodeBarang = $row['kodeTerbesar'];
+
+
+$urutan = (int) substr($kodeBarang, 7);
+
+
+$urutan++;
+
+$huruf = date('ymd');
+$kodeBarang = $huruf . sprintf("%03s", $urutan);
+
 if($_POST) {
 	if(isset($_POST['btnHapus'])){
 		mysqli_query($koneksi,"DELETE FROM tr_out_tmp WHERE id='".$_POST['btnHapus']."' AND kode_user='".$_SESSION['kode_user']."'") 
@@ -84,7 +97,7 @@ if($_POST) {
 		}
 				
 		if(count($message)==0){			
-			$kodeBaru		= kodeUnik("tr_out", "kode_out", "".date('ymd')."", "10","tgl_out");
+			$kodeBaru		= $_POST['kode'];
 			// UPLOAD CSR
 			if (! empty($_FILES['txtCSR']['tmp_name'])) {
 				$file_csr = $_FILES['txtCSR']['name'];
@@ -203,7 +216,7 @@ if($_POST) {
 		echo "</div>"; 
 	}
 } 
-$nomorTransaksi 	= kodeUnik("tr_in", "kode_in", "".date('ymd')."", "10","tgl_in");
+$nomorTransaksi 	= $kodeBarang ;
 $dataTglTransaksi 	= isset($_POST['txtTglTransaksi']) ? $_POST['txtTglTransaksi'] : date('Y-m-d');
 $dataTglPengiriman	= isset($_POST['txtTglPengiriman']) ? $_POST['txtTglPengiriman'] : '';
 $dataCustomer		= isset($_POST['cmbCustomer']) ? $_POST['cmbCustomer'] : '';
@@ -240,7 +253,7 @@ function submitform() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label class="control-label">No. Pengeluaran :</label>
-							<input class="form-control" type="text" value="<?php echo $nomorTransaksi; ?>" disabled="disabled"/>
+							<input class="form-control" type="text" value="<?php echo $nomorTransaksi; ?>" readonly name="kode"/>
 						</div>
 					</div>
 					<div class="col-md-3">
